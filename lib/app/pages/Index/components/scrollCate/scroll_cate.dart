@@ -10,7 +10,7 @@ class ScrollCate extends StatelessWidget {
   ScrollCate(this.scrollCateList);
 
   //可滑动分类的controller
-  ScrollCateController scrollCateController = Get.put(ScrollCateController());
+  final ScrollCateController scrollCateController = Get.put(ScrollCateController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class ScrollCate extends StatelessWidget {
                       color: Color(0xffc7c7c7),
                       borderRadius: BorderRadius.all(Radius.circular(22.r))),
                   child: Align(
-                    alignment: Alignment(scrollCateController.actualPixels, 0),
+                    alignment: Alignment(scrollCateController.actualPixels.toDouble(), 0),
                     child: Container(
                       width: 36.r,
                       height: 5.r,

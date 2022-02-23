@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class ScrollCateController extends GetxController {
   // 自定义滚动条实际当前滚动位置
-  double actualPixels = -1.0.obs;
+  // RxDouble actualPixels = -1.0.obs;
+  RxDouble actualPixels = (1.0*-1).obs;
 
   bool handleScrollNotification(ScrollNotification notification) {
     final ScrollMetrics metrics = notification.metrics;
@@ -17,8 +18,7 @@ class ScrollCateController extends GetxController {
     //自定义滚动条当前滚动位置
     double customPixels = pixels * 40.r / maxScrollExtent;
     //自定义滚动条实际当前滚动位置
-    actualPixels = -1 + customPixels.r * ratio;
-    print(actualPixels);
+    actualPixels.value = -1 + customPixels.r * ratio;
     return true;
   }
 
