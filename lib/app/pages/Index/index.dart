@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/app/pages/Index/components/category.dart';
 import 'package:nzz/app/pages/Index/components/headlines.dart';
+import 'package:nzz/app/pages/Index/components/qrqm_swiper.dart';
 import 'package:nzz/app/pages/Index/components/scrollCate/scroll_cate.dart';
+import 'package:nzz/app/pages/Index/components/scroll_bar_widget.dart';
 
 import 'package:nzz/basic.dart';
 
-import 'package:nzz/app/components/common/nzz_swiper.dart';
-import 'package:nzz/app/components/common/sliver_app_bar_delegate.dart';
-import 'package:nzz/app/components/common/app_bar.dart';
-import 'package:nzz/app/components/common/security_widget.dart';
+import 'package:nzz/app/components/nzz_swiper.dart';
+import 'package:nzz/app/components/sliver_app_bar_delegate.dart';
+import 'package:nzz/app/components/app_bar.dart';
+import 'package:nzz/app/components/security_widget.dart';
 
 import 'package:nzz/app/controllers/index_controller.dart';
 
@@ -30,7 +32,6 @@ class Index extends StatelessWidget {
             isPrimary: false),
         Expanded(
             child: Container(
-          color: ColorStyle.colorWhite,
           child: RefreshIndicator(
             onRefresh: () {
               return Future.delayed(Duration(milliseconds: 1000), () {
@@ -43,6 +44,7 @@ class Index extends StatelessWidget {
                 //上面内容
                 SliverToBoxAdapter(
                   child: Container(
+                      color: ColorStyle.colorWhite,
                       padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0),
                       child: Column(
                         children: <Widget>[
@@ -55,20 +57,41 @@ class Index extends StatelessWidget {
                           // 头条
                           HeadLines(indexController.headlines),
                           SizedBox(height: 38.r),
-                          // 分类
-                          CateGory(),
-                          //滑动分类
-                          ScrollCate(indexController.scrollCateList)
                         ],
                       )),
                 ),
+                //分类
+                SliverToBoxAdapter(
+                  child: CateGory(),
+                ),
+                // 间隔
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: ColorStyle.colorWhite,
+                    height: 24.r,
+                  ),
+                ),
+                //滑动分类
+                SliverToBoxAdapter(
+                  child: ScrollCate(indexController.scrollCateList),
+                ),
+                // 间隔
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 20.r),
+                ),
+                // 千人千面（美食）
+                SliverToBoxAdapter(
+                    child: QrqmSwiper(indexController.storeList)),
                 //可吸顶
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverAppBarDelegate(
                     minHeight: 100.r,
                     maxHeight: 100.r,
-                    child: Container(color: Colors.red, height: 100.r),
+                    child: Container(
+                      height: 150.r,
+                      child: ScrollBarWidget(indexController.scrollList),
+                    ),
                   ),
                 ),
                 // 下面列表

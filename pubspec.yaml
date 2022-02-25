@@ -29,5 +29,11 @@ flutter:
     - images/index_cate_quality.png
     - images/index_cate_make.png
     - images/index_cate_vouchers.png
+    - images/location_icon.png
+    - images/hui_icon.png
+    - images/quan_icon.png
+    - images/xkzx_icon.png
+    - images/star_light.png
+    - images/star_dark.png
     
 

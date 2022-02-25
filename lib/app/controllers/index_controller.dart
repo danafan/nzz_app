@@ -7,9 +7,9 @@ class IndexController extends GetxController {
   ScrollController indexController = ScrollController();
   //轮播图列表
   List<String> imgs = [
-    "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1498550744921-75f79806b8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/671400C0AA454D6DAF30F96F7AA76861",
+    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/0ABA8E7301784E819AE64128A627D4DB",
+    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/951BD7DD50AF41AAB53B600F088D3E65"
   ];
   // 头条列表
   List<String> headlines = ['虎年邀你一起 虎赚赚', '分享创收 0门槛0风险', '严选品质 免费消费'];
@@ -42,6 +42,37 @@ class IndexController extends GetxController {
           'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/95266CA46745442C9C477530B674CCE4',
       'name': '测试结尾'
     }
+  ];
+  //千人千面（美食）店铺列表
+  List storeList = [
+    {
+      'img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F',
+      'store_name': '浅草君日料',
+      'score': 2.0
+    },
+    {
+      'img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/5312EE26BA6B4E918239A3A27EB715FB',
+      'store_name': '海底捞火锅',
+      'score': 3.6
+    },
+    {
+      'img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/4D36ED8A08CB4DE4AC3FBBF131AFDBC1',
+      'store_name': '东北风菜馆',
+      'score': 4.5
+    }
+  ];
+  //列表上面可滑动分类
+  List scrollList = [
+    {'name': '推荐', 'subname': '热销商品'},
+    {'name': '休闲食品', 'subname': '坚果/糕点'},
+    {'name': '营养早餐', 'subname': '煎饼/果子'},
+    {'name': '实惠午餐', 'subname': '大排/鸡腿'},
+    {'name': '健康晚餐', 'subname': '蔬菜'},
+    {'name': '健身餐', 'subname': '鸡胸/蛋白'},
+    {'name': '瘦身减肥', 'subname': '0脂0卡'}
   ];
 
   @override
