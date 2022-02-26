@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nzz/app/components/staggered_grid_view.dart';
 import 'package:nzz/app/pages/Index/components/category.dart';
 import 'package:nzz/app/pages/Index/components/headlines.dart';
 import 'package:nzz/app/pages/Index/components/qrqm_swiper.dart';
+import 'package:nzz/app/pages/Index/components/scrollBar/scroll_bar_view.dart';
 import 'package:nzz/app/pages/Index/components/scrollCate/scroll_cate.dart';
-import 'package:nzz/app/pages/Index/components/scroll_bar_widget.dart';
+
+
 
 import 'package:nzz/basic.dart';
 
@@ -31,8 +34,11 @@ class Index extends StatelessWidget {
             inputBackDark: true,
             isPrimary: false),
         Expanded(
-            child: Container(
-          child: RefreshIndicator(
+            child: 
+          //   Container(
+          // color: ColorStyle.colorBackGround,
+          // child: 
+          RefreshIndicator(
             onRefresh: () {
               return Future.delayed(Duration(milliseconds: 1000), () {
                 print('刷新了');
@@ -55,7 +61,7 @@ class Index extends StatelessWidget {
                           SecurityWidget(),
                           SizedBox(height: 36.r),
                           // 头条
-                          HeadLines(indexController.headlines),
+                          HeadLines(),
                           SizedBox(height: 38.r),
                         ],
                       )),
@@ -73,45 +79,43 @@ class Index extends StatelessWidget {
                 ),
                 //滑动分类
                 SliverToBoxAdapter(
-                  child: ScrollCate(indexController.scrollCateList),
+                  child: ScrollCate(),
                 ),
                 // 间隔
                 SliverToBoxAdapter(
                   child: SizedBox(height: 20.r),
                 ),
                 // 千人千面（美食）
-                SliverToBoxAdapter(
-                    child: QrqmSwiper(indexController.storeList)),
+                SliverToBoxAdapter(child: QrqmSwiper()),
                 //可吸顶
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: SliverAppBarDelegate(
-                    minHeight: 100.r,
-                    maxHeight: 100.r,
-                    child: Container(
-                      height: 150.r,
-                      child: ScrollBarWidget(indexController.scrollList),
-                    ),
+                    minHeight: 150.r,
+                    maxHeight: 150.r,
+                    child: ScrollBarView(),
                   ),
                 ),
                 // 下面列表
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return Container(
-                      height: 50,
-                      color: index % 2 == 0 ? Colors.white : Colors.black12,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text("我是第${index}个item"),
-                    );
-                  },
-                  childCount: 30,
-                ))
+                SliverToBoxAdapter(child: StaggeredGridView()),
+                // SliverList(
+                //     delegate: SliverChildBuilderDelegate(
+                //   (context, index) {
+                //     return Container(
+                //       height: 50,
+                //       color: index % 2 == 0 ? Colors.white : Colors.black12,
+                //       width: double.infinity,
+                //       alignment: Alignment.center,
+                //       child: Text("我是第${index}个item"),
+                //     );
+                //   },
+                //   childCount: 30,
+                // ))
               ],
             ),
           ),
-        ))
+        // )
+        )
       ],
     ));
   }

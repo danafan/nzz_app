@@ -7,7 +7,9 @@ class ColorStyle {
   static const Color colorTitle = Color(0xff000000);      //深黑色
   static const Color colorDesc = Color(0xff999999);       //副标题颜色
   static const Color colorWhite = Color(0xffffffff);      //白色
-  static const String fontFamilySc = 'PingFang SC';      //白色
+  static const Color colorBackGround = Color(0xfff8f8f8); //页面背景色
+
+  static const String fontFamilySc = 'PingFang SC';       //字体
 }
 
 //图片前缀

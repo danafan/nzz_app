@@ -15,33 +15,13 @@ class IndexController extends GetxController {
   List<String> headlines = ['虎年邀你一起 虎赚赚', '分享创收 0门槛0风险', '严选品质 免费消费'];
   //可滑动分类列表
   List scrollCateList = [
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/95266CA46745442C9C477530B674CCE4',
-      'name': '营养早餐'
-    },
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1CBD562199AB40DA97CACFB59941E7DD',
-      'name': '卤味'
-    },
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/7BDB776FE81B4FE8AA7ACBD502537754',
-      'name': '礼盒'
-    },
+    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '营养早餐'},
+    {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '卤味'},
+    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '礼盒'},
     {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '酒水饮料'},
     {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '休闲视频'},
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1CBD562199AB40DA97CACFB59941E7DD',
-      'name': '健康滋养'
-    },
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/95266CA46745442C9C477530B674CCE4',
-      'name': '测试结尾'
-    }
+    {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '健康滋养'},
+    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '测试结尾'}
   ];
   //千人千面（美食）店铺列表
   List storeList = [
@@ -66,14 +46,87 @@ class IndexController extends GetxController {
   ];
   //列表上面可滑动分类
   List scrollList = [
-    {'name': '推荐', 'subname': '热销商品'},
-    {'name': '休闲食品', 'subname': '坚果/糕点'},
-    {'name': '营养早餐', 'subname': '煎饼/果子'},
-    {'name': '实惠午餐', 'subname': '大排/鸡腿'},
-    {'name': '健康晚餐', 'subname': '蔬菜'},
-    {'name': '健身餐', 'subname': '鸡胸/蛋白'},
-    {'name': '瘦身减肥', 'subname': '0脂0卡'}
+    {'id': '1', 'name': '推荐', 'subname': '热销商品'},
+    {'id': '2', 'name': '休闲食品', 'subname': '坚果/糕点'},
+    {'id': '3', 'name': '营养早餐', 'subname': '煎饼/果子'},
+    {'id': '4', 'name': '实惠午餐', 'subname': '大排/鸡腿'},
+    {'id': '5', 'name': '健康晚餐', 'subname': '蔬菜'},
+    {'id': '6', 'name': '健身餐', 'subname': '鸡胸/蛋白'},
+    {'id': '7', 'name': '瘦身减肥', 'subname': '0脂0卡'}
   ];
+  //商品列表
+  List goodsList = [
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': false
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': false
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': false
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+    {
+      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
+      'goods_img':
+          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
+      'show': true
+    },
+  ];
+  //切换列表上面的滑动分类(重新获取列表)
+  changeScroll(id) {
+    print(id);
+  }
 
   @override
   void onInit() {

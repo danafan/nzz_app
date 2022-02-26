@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:get/get.dart';
+import 'package:nzz/app/controllers/index_controller.dart';
 
 class NzzSwiper extends StatelessWidget {
   final double height; //高度
   final List imgs; //图片列表
   NzzSwiper(this.height, this.imgs);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,6 +28,9 @@ class NzzSwiper extends StatelessWidget {
                   return CustomPagination(config.activeIndex, config.itemCount);
                 }))));
   }
+}
+
+mixin indexController {
 }
 
 //自定义指示器

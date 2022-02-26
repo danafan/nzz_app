@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:get/get.dart';
 import 'package:nzz/app/components/grade_star_view.dart';
+import 'package:nzz/app/controllers/index_controller.dart';
 import 'package:nzz/basic.dart';
 
 class QrqmSwiper extends StatelessWidget {
-  final List storeList; //店铺列表
-  QrqmSwiper(this.storeList);
+
+  //获取首页数据
+  final IndexController indexController = Get.find<IndexController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +29,7 @@ class QrqmSwiper extends StatelessWidget {
                     // 左侧店铺主图
                     ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
-                        child: Image.network(storeList[index]['img'],
+                        child: Image.network(indexController.storeList[index]['img'],
                             fit: BoxFit.cover, width: 215.r, height: 215.r)),
                     SizedBox(width: 20.r),
                     // 右侧店铺内容
@@ -35,7 +39,7 @@ class QrqmSwiper extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         // 店铺名称
-                        Text(storeList[index]['store_name'],
+                        Text(indexController.storeList[index]['store_name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -43,7 +47,7 @@ class QrqmSwiper extends StatelessWidget {
                                 fontSize: 32.r,
                                 fontWeight: FontWeight.w600)),
                         // 星级评分
-                        GradeStarView(storeList[index]['score'],size:30),
+                        GradeStarView(indexController.storeList[index]['score'],size:30),
                         // 类型、位置、距离
                         Row(
                           children: <Widget>[
@@ -127,7 +131,7 @@ class QrqmSwiper extends StatelessWidget {
                     ))
                   ]));
             },
-            itemCount: storeList.length,
+            itemCount: indexController.storeList.length,
             autoplay: true));
   }
 }

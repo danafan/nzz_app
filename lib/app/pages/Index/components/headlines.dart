@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:get/get.dart';
+import 'package:nzz/app/controllers/index_controller.dart';
 
 import 'package:nzz/basic.dart';
 
 class HeadLines extends StatelessWidget {
-  final List headlines; //图片列表
-  HeadLines(this.headlines);
+
+  //获取首页数据
+  final IndexController indexController = Get.find<IndexController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +42,11 @@ class HeadLines extends StatelessWidget {
                   child: Swiper(
                     scrollDirection:Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
-                        return Text(headlines[index],
+                        return Text(indexController.headlines[index],
                             style: TextStyle(
                                 fontSize: 24.r, color: ColorStyle.colorText));
                       },
-                      itemCount: headlines.length,
+                      itemCount: indexController.headlines.length,
                       autoplay: true)))
         ],
       ),
