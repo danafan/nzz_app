@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-import 'package:nzz/app/controllers/index_controller.dart';
+import 'package:nzz/controllers/index_controller.dart';
 
 class NzzSwiper extends StatelessWidget {
   final double height; //高度

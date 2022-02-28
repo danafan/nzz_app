@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import 'app/routes/app_pages.dart';
+import 'routes/app_pages.dart';
 import 'basic.dart';
 
 void main() => runApp(MyApp());

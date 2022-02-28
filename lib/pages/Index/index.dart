@@ -1,25 +1,25 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nzz/app/components/staggered_grid_view.dart';
-import 'package:nzz/app/pages/Index/components/category.dart';
-import 'package:nzz/app/pages/Index/components/headlines.dart';
-import 'package:nzz/app/pages/Index/components/qrqm_swiper.dart';
-import 'package:nzz/app/pages/Index/components/scrollBar/scroll_bar_view.dart';
-import 'package:nzz/app/pages/Index/components/scrollCate/scroll_cate.dart';
-
-
+import 'package:nzz/components/goods_item_view.dart';
+import 'package:nzz/components/loadMore/load_more_view.dart';
+import 'package:nzz/pages/Index/components/category.dart';
+import 'package:nzz/pages/Index/components/headlines.dart';
+import 'package:nzz/pages/Index/components/qrqm_swiper.dart';
+import 'package:nzz/pages/Index/components/scrollBar/scroll_bar_view.dart';
+import 'package:nzz/pages/Index/components/scrollCate/scroll_cate.dart';
 
 import 'package:nzz/basic.dart';
 
-import 'package:nzz/app/components/nzz_swiper.dart';
-import 'package:nzz/app/components/sliver_app_bar_delegate.dart';
-import 'package:nzz/app/components/app_bar.dart';
-import 'package:nzz/app/components/security_widget.dart';
+import 'package:nzz/components/nzz_swiper.dart';
+import 'package:nzz/components/sliver_app_bar_delegate.dart';
+import 'package:nzz/components/app_bar.dart';
+import 'package:nzz/components/security_widget.dart';
 
-import 'package:nzz/app/controllers/index_controller.dart';
+import 'package:nzz/controllers/index_controller.dart';
 
 class Index extends StatelessWidget {
+
   //首页数据controller
   IndexController indexController = Get.put(IndexController());
 
@@ -34,11 +34,7 @@ class Index extends StatelessWidget {
             inputBackDark: true,
             isPrimary: false),
         Expanded(
-            child: 
-          //   Container(
-          // color: ColorStyle.colorBackGround,
-          // child: 
-          RefreshIndicator(
+          child: RefreshIndicator(
             onRefresh: () {
               return Future.delayed(Duration(milliseconds: 1000), () {
                 print('刷新了');
@@ -97,24 +93,29 @@ class Index extends StatelessWidget {
                   ),
                 ),
                 // 下面列表
-                SliverToBoxAdapter(child: StaggeredGridView()),
-                // SliverList(
-                //     delegate: SliverChildBuilderDelegate(
-                //   (context, index) {
-                //     return Container(
-                //       height: 50,
-                //       color: index % 2 == 0 ? Colors.white : Colors.black12,
-                //       width: double.infinity,
-                //       alignment: Alignment.center,
-                //       child: Text("我是第${index}个item"),
-                //     );
-                //   },
-                //   childCount: 30,
-                // ))
+                SliverPadding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 20.r),
+                    sliver: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            //创建子widget
+                            return GoodsItemView(
+                                indexController.goodsList[index]);
+                          },
+                          childCount: indexController.goodsList.length,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.r, //主轴中间间距
+                          crossAxisSpacing: 10.r, //副轴中间间距
+                          childAspectRatio: 0.63, //item 宽高比
+                        ))),
+                // 列表加载状态
+                SliverToBoxAdapter(child: LoadMoreView())
               ],
             ),
           ),
-        // )
         )
       ],
     ));

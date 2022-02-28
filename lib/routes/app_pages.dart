@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import 'package:nzz/app/pages/Category/category.dart';
-import 'package:nzz/app/pages/Index/index.dart';
-import 'package:nzz/app/pages/Message/message.dart';
-import 'package:nzz/app/pages/Mine/mine.dart';
-import 'package:nzz/app/pages/Shopcar/shopcar.dart';
-import 'package:nzz/app/pages/navBar/bindings/nav_bar_binding.dart';
-import 'package:nzz/app/pages/navBar/views/nav_bar_view.dart';
+import 'package:nzz/pages/Category/category.dart';
+import 'package:nzz/pages/Index/index.dart';
+import 'package:nzz/pages/Message/message.dart';
+import 'package:nzz/pages/Mine/mine.dart';
+import 'package:nzz/pages/Shopcar/shopcar.dart';
+import 'package:nzz/pages/navBar/bindings/nav_bar_binding.dart';
+import 'package:nzz/pages/navBar/views/nav_bar_view.dart';
 
 part 'app_routes.dart';
 

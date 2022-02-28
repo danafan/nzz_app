@@ -1,50 +1,17 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
-import 'package:nzz/app/components/zf_tag_widget.dart';
-import 'package:nzz/app/controllers/index_controller.dart';
+import 'package:nzz/components/zf_tag_widget.dart';
 import 'package:nzz/basic.dart';
 
-class StaggeredGridView extends StatelessWidget {
-  //获取首页数据
-  final IndexController indexController = Get.find<IndexController>();
-
-  final List<Map<String, dynamic>> _items = List.generate(
-      30,
-      (index) => {
-            "id": index,
-            "title": "Item $index",
-            "height": Random().nextInt(150) + 50.5
-          });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: MasonryGridView.count(
-          shrinkWrap: true,
-          itemCount: indexController.goodsList.length,
-          padding: EdgeInsets.symmetric(horizontal: 20.r),
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.r,
-          crossAxisSpacing: 10.r,
-          itemBuilder: (context, index) {
-            return GoodsItemWidget(indexController.goodsList[index]);
-          },
-        ));
-  }
-}
-
-class GoodsItemWidget extends StatelessWidget {
+class GoodsItemView extends StatelessWidget {
   //每一个 商品
   final goodsItem;
-  GoodsItemWidget(this.goodsItem);
+  GoodsItemView(this.goodsItem);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 350.r,
       decoration: BoxDecoration(
           color: ColorStyle.colorWhite,
           borderRadius: BorderRadius.circular(4.r)),
@@ -98,17 +65,13 @@ class GoodsItemWidget extends StatelessWidget {
                           decoration: TextDecoration.lineThrough))
                 ],
               ),
-              Offstage(
-                  offstage: goodsItem['show'], child: SizedBox(height: 10.r)),
-              Offstage(
-                offstage: goodsItem['show'],
-                child: Row(
-                  children: <Widget>[
-                    ZfTagWidget('自购省', ColorStyle.colorPrimary, 3),
-                     SizedBox(width: 10.r),
-                    ZfTagWidget('分享赚', Color(0xffff5232), 5),
-                  ],
-                ),
+              SizedBox(height: 10.r),
+              Row(
+                children: <Widget>[
+                  ZfTagWidget('自购省', ColorStyle.colorPrimary, 3),
+                  SizedBox(width: 10.r),
+                  ZfTagWidget('分享赚', Color(0xffff5232), 5),
+                ],
               )
             ]),
           ),

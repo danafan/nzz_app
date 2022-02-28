@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:nzz/app/pages/navBar/controllers/nav_bar_controller.dart';
+import 'package:nzz/pages/navBar/controllers/nav_bar_controller.dart';
 import 'package:nzz/basic.dart';
 
 class NavBarView extends GetView<NavBarController> {

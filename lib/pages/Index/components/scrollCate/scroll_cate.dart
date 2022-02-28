@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nzz/app/controllers/index_controller.dart';
-import 'package:nzz/app/pages/Index/components/scrollCate/scroll_cate_controller.dart';
+import 'package:nzz/controllers/index_controller.dart';
+import 'package:nzz/pages/Index/components/scrollCate/scroll_cate_controller.dart';
 import 'package:nzz/basic.dart';
 
 class ScrollCate extends StatelessWidget {

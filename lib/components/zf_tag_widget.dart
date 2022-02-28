@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nzz/app/components/dashed_line.dart';
+import 'package:nzz/components/dashed_line.dart';
 import 'package:nzz/basic.dart';
 
 //自购省、分享赚标签组件
