@@ -19,9 +19,8 @@ import 'package:nzz/components/security_widget.dart';
 import 'package:nzz/controllers/index_controller.dart';
 
 class Index extends StatelessWidget {
-
   //首页数据controller
-  IndexController indexController = Get.put(IndexController());
+  final IndexController indexController = Get.put(IndexController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class Index extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () {
               return Future.delayed(Duration(milliseconds: 1000), () {
-                print('刷新了');
+                indexController.refreshGoodsList();
               });
             },
             child: CustomScrollView(
@@ -51,7 +50,7 @@ class Index extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           //  轮播图
-                          NzzSwiper(280.r, indexController.imgs),
+                          NzzSwiper(280.r),
                           SizedBox(height: 15.r),
                           // 保障
                           SecurityWidget(),
@@ -86,6 +85,7 @@ class Index extends StatelessWidget {
                 //可吸顶
                 SliverPersistentHeader(
                   pinned: true,
+                  floating: true,
                   delegate: SliverAppBarDelegate(
                     minHeight: 150.r,
                     maxHeight: 150.r,
@@ -93,7 +93,7 @@ class Index extends StatelessWidget {
                   ),
                 ),
                 // 下面列表
-                SliverPadding(
+                Obx(() => SliverPadding(
                     padding:
                         EdgeInsets.symmetric(vertical: 0, horizontal: 20.r),
                     sliver: SliverGrid(
@@ -110,7 +110,7 @@ class Index extends StatelessWidget {
                           mainAxisSpacing: 10.r, //主轴中间间距
                           crossAxisSpacing: 10.r, //副轴中间间距
                           childAspectRatio: 0.63, //item 宽高比
-                        ))),
+                        )))),
                 // 列表加载状态
                 SliverToBoxAdapter(child: LoadMoreView())
               ],

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -6,8 +8,10 @@ import 'package:nzz/controllers/index_controller.dart';
 
 class NzzSwiper extends StatelessWidget {
   final double height; //高度
-  final List imgs; //图片列表
-  NzzSwiper(this.height, this.imgs);
+  NzzSwiper(this.height);
+
+  //获取首页数据
+  final IndexController indexController = Get.find<IndexController>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +19,12 @@ class NzzSwiper extends StatelessWidget {
         height: height,
         child: Swiper(
             itemBuilder: (BuildContext context, int index) {
-              return ClipRRect(
+              return Obx(()=>ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
-                  child: Image.network(imgs[index], fit: BoxFit.cover));
+                  child: Image.network(indexController.bannerList[index].value.pic,
+                      fit: BoxFit.cover)));
             },
-            itemCount: imgs.length,
+            itemCount: indexController.bannerList.length,
             autoplay: true,
             pagination: SwiperPagination(
                 alignment: Alignment.bottomRight,
@@ -28,9 +33,6 @@ class NzzSwiper extends StatelessWidget {
                   return CustomPagination(config.activeIndex, config.itemCount);
                 }))));
   }
-}
-
-mixin indexController {
 }
 
 //自定义指示器

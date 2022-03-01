@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-// GoodsCategoryModel goodsCategoryModelFromJson(String str) => GoodsCategoryModel.fromJson(json.decode(str));
-
-// String goodsCategoryModelToJson(GoodsCategoryModel data) => json.encode(data.toJson());
+// import 'dart:convert';
 
 class GoodsCategoryModel {
     GoodsCategoryModel({
@@ -44,7 +40,7 @@ class Datum {
         required this.children,
     });
 
-    int id;
+    dynamic id;
     int pid;
     String cateName;
     String pic;

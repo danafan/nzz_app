@@ -6,9 +6,9 @@ import 'package:nzz/pages/Index/components/scrollCate/scroll_cate_controller.dar
 import 'package:nzz/basic.dart';
 
 class ScrollCate extends StatelessWidget {
-
   //可滑动分类的controller
-  final ScrollCateController scrollCateController = Get.put(ScrollCateController());
+  final ScrollCateController scrollCateController =
+      Get.put(ScrollCateController());
   //获取首页数据
   final IndexController indexController = Get.find<IndexController>();
 
@@ -29,12 +29,15 @@ class ScrollCate extends StatelessWidget {
                         width: 187.5.r,
                         alignment: Alignment.center,
                         child: Column(children: <Widget>[
-                          Image.network(
-                              indexController.scrollCateList[index]['img'],
-                              width: 120.r,
-                              height: 120.r),
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(60.r),
+                              child: Image.network(
+                                  indexController.scrollCateList[index].pic,
+                                  fit:BoxFit.cover,
+                                  width: 120.r,
+                                  height: 120.r)),
                           SizedBox(height: 10.r),
-                          Text(indexController.scrollCateList[index]['name'],
+                          Text(indexController.scrollCateList[index].cateName,
                               style: TextStyle(
                                   color: ColorStyle.colorTitle, fontSize: 24.r))
                         ]),

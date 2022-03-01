@@ -21,59 +21,69 @@ class GoodsItemView extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(4.r),
                   topRight: Radius.circular(4.r)),
-              child: Image.network(goodsItem['goods_img'],
+              child: Image.network(goodsItem.image,
                   width: 350.r, height: 350.r, fit: BoxFit.cover)),
           Container(
             padding: EdgeInsets.symmetric(vertical: 10.r, horizontal: 15.r),
-            child: Column(children: <Widget>[
-              Text(
-                goodsItem['goods_name'],
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: ColorStyle.colorText,
-                    fontSize: 28.r,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 10.r),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      text: '8.',
-                      style: TextStyle(
-                          color: ColorStyle.colorPrimary,
-                          fontSize: 44.r,
-                          fontWeight: FontWeight.bold),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: '99',
-                            style: TextStyle(
-                              color: ColorStyle.colorPrimary,
-                              fontSize: 24.r,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
-                    ),
+                  Text(
+                    goodsItem.storeName,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: ColorStyle.colorText,
+                        fontSize: 28.r,
+                        fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(width: 10.r),
-                  Text('京东价200元',
-                      style: TextStyle(
-                          color: ColorStyle.colorDesc,
-                          fontSize: 20.r,
-                          decoration: TextDecoration.lineThrough))
-                ],
-              ),
-              SizedBox(height: 10.r),
-              Row(
-                children: <Widget>[
-                  ZfTagWidget('自购省', ColorStyle.colorPrimary, 3),
-                  SizedBox(width: 10.r),
-                  ZfTagWidget('分享赚', Color(0xffff5232), 5),
-                ],
-              )
-            ]),
+                  SizedBox(height: 10.r),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          text: '${goodsItem.price.toString().split('.')[0]}.',
+                          style: TextStyle(
+                              color: ColorStyle.colorPrimary,
+                              fontSize: 44.r,
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: goodsItem.price.toString().split('.')[1],
+                                style: TextStyle(
+                                  color: ColorStyle.colorPrimary,
+                                  fontSize: 24.r,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10.r),
+                      Offstage(
+                          offstage: goodsItem.thirdPrice <= 0,
+                          child: Text(
+                              '淘宝价${goodsItem.thirdPrice.toStringAsFixed(1)}元',
+                              style: TextStyle(
+                                  color: ColorStyle.colorDesc,
+                                  fontSize: 20.r,
+                                  decoration: TextDecoration.lineThrough))),
+                    ],
+                  ),
+                  SizedBox(height: 10.r),
+                  Row(
+                    children: <Widget>[
+                      Offstage(
+                          offstage: goodsItem.type == 2,
+                          child:
+                              ZfTagWidget('自购省', ColorStyle.colorPrimary, goodsItem.selfBuyMoney.toStringAsFixed(1))),
+                      Offstage(
+                          offstage: goodsItem.type == 2,
+                          child: SizedBox(width: 10.r)),
+                      ZfTagWidget('分享赚', Color(0xffff5232), goodsItem.shareBuyMoney.toStringAsFixed(1)),
+                    ],
+                  )
+                ]),
           ),
         ],
       ),

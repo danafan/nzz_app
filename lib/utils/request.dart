@@ -33,16 +33,16 @@ class Request {
       // 在请求被发送之前做一些预处理
       return handler.next(options); //continue
     }, onResponse: (response, handler) {
-      // int code = jsonDecode(response.data)['code'];
-      // switch (code) {
-      //   case 0:
-      //     print('没有权限 重新登录');
-      //     break;
-      //   default:
-      // }
-      // 在返回响应数据之前做一些预处理
+      int status = response.data['status'];
+      switch (status) {
+        case 500:
+          print('乱传参数');
+          return;
+        default:
+      }
       return handler.next(response);
     }, onError: (DioError e, handler) {
+      print('有毛病');
       // 当请求失败时做一些预处理
       ErrorEntity eInfo = createErrorEntity(e);
       // 错误交互处理
@@ -75,6 +75,7 @@ class Request {
    * error统一处理
    */
   ErrorEntity createErrorEntity(DioError error) {
+    print(error.type);
     switch (error.type) {
       case DioErrorType.cancel:
         {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:nzz/api/common_api.dart';
 import 'package:nzz/api/goods_api.dart';
 import 'package:nzz/components/loadMore/load_more_controller.dart';
 
@@ -13,23 +14,16 @@ class IndexController extends GetxController {
   LoadMoreController loadMoreController = Get.put(LoadMoreController());
 
   //轮播图列表
-  List<String> imgs = [
-    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/671400C0AA454D6DAF30F96F7AA76861",
-    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/0ABA8E7301784E819AE64128A627D4DB",
-    "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/951BD7DD50AF41AAB53B600F088D3E65"
-  ];
+  List bannerList = [].obs;
+  // List<String> imgs = [
+  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/671400C0AA454D6DAF30F96F7AA76861",
+  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/0ABA8E7301784E819AE64128A627D4DB",
+  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/951BD7DD50AF41AAB53B600F088D3E65"
+  // ];
   // 头条列表
   List<String> headlines = ['虎年邀你一起 虎赚赚', '分享创收 0门槛0风险', '严选品质 免费消费'];
   //可滑动分类列表
-  List scrollCateList = [
-    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '营养早餐'},
-    {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '卤味'},
-    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '礼盒'},
-    {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '酒水饮料'},
-    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '休闲视频'},
-    {'img': 'https://image.dayouqiantu.cn/collect.png', 'name': '健康滋养'},
-    {'img': 'https://image.dayouqiantu.cn/goods.png', 'name': '测试结尾'}
-  ];
+  List scrollCateList = [].obs;
   //千人千面（美食）店铺列表
   List storeList = [
     {
@@ -52,91 +46,32 @@ class IndexController extends GetxController {
     }
   ];
   //列表上面可滑动分类
-  List scrollList = [].obs;  
+  List scrollList = [].obs;
 
-  //商品列表
-  List goodsList = [
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484'
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
-      'show': true
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
-      'show': true
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
-      'show': false
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
-      'show': true
-    },
-    {
-      'goods_name': '中汇大米三星丁忧长粒大米大米米大米',
-      'goods_img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/1FBAD7D3339F4C2D87253480FC45B484',
-      'show': true
-    },
-  ];
-
-  
-
-  //切换列表上面的滑动分类(重新获取列表)
-  changeScroll(id) {
-    print(id);
-  }
+  //获取商品列表参数
+  int page = 1; //当前页码
+  dynamic pid = ''; //选中的菜单id
+  // 返回数据
+  int lastPage = 1; //最后一页的页码
+  List goodsList = [].obs; //商品列表
 
   @override
   void onInit() {
     super.onInit();
+    //获取banner列表
+    getBannerList();
     //获取商品列表上面可滑动的分类列表
     getCategoryList();
-    //列表控制器
+    //列表控制器（监听是否滑动到最底部）
     indexController.addListener(() {
       if (indexController.position.pixels ==
           indexController.position.maxScrollExtent) {
-            // 列表底部加载状态组件
-            loadMoreController.changeIsLoad(false);
-        print("滑动到底部");
+        //页码加1
+        if (page < lastPage) {
+          page += 1;
+          //获取商品列表
+          getGoodsList();
+        }
       }
     });
   }
@@ -148,14 +83,67 @@ class IndexController extends GetxController {
 
   @override
   void onClose() {}
-  //获取商品列表上面可滑动的分类列表
-  getCategoryList(){
-    GoodsAPI.getCategoryList(params: {'categoryType':'2'}).then((res) => {
-      for(int i = 0;i < res.data.length;i ++){
-         if(res.data[i].activityStatus == 1){
-           scrollList.add(res.data[i])
-         }
-      },
+
+  //切换列表上面的滑动分类(重新获取列表)
+  changeScroll(id) {
+    pid = id;
+    //下拉刷新
+    refreshGoodsList();
+  }
+
+  //下拉刷新
+  void refreshGoodsList() {
+    page = 1;
+    goodsList.clear();
+    //获取商品列表
+    getGoodsList();
+  }
+
+  //获取banner列表
+  getBannerList() {
+    Map<String, dynamic> params = {
+      'type': 0
+    };
+    CommonAPI.getBannerList(params: params).then((res) => {
+      bannerList = res.data.banner,
+      print(bannerList)
     });
+  }
+
+  //获取商品分类列表（分类和下面商品列表的分类）
+  void getCategoryList() {
+    GoodsAPI.getCategoryList(params: {'categoryType': '2'})
+        .then((res) => {
+              for (int i = 0; i < res.data.length; i++)
+                {
+                  // 首页顶部分类
+                  if (res.data[i].activityStatus != -1 &&
+                      res.data[i].activityStatus != 3)
+                    {scrollCateList.add(res.data[i])},
+                  // 商品列表分类
+                  if (res.data[i].activityStatus == -1 ||
+                      res.data[i].activityStatus == 1)
+                    {scrollList.add(res.data[i])}
+                },
+              pid = scrollList[0].id //设置请求参数pid
+            })
+        .then((value) => getGoodsList());
+  }
+
+  //获取商品列表
+  getGoodsList() {
+    Map<String, dynamic> params = {
+      'page': page,
+      'pid': pid,
+      'goodType': 13,
+      'homeOrder': 'true',
+      'limit': 10
+    };
+    GoodsAPI.getGoodsList(params: params).then((res) => {
+          lastPage = res.data.pages, //最后一页的页码
+          goodsList = goodsList..addAll(res.data.records), //当前页的商品列表
+          // 列表底部加载状态组件
+          loadMoreController.changeIsLoad(page == lastPage ? false : true)
+        });
   }
 }

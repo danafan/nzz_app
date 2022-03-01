@@ -5,7 +5,7 @@ import 'package:nzz/components/loadMore/load_more_controller.dart';
 
 class LoadMoreView extends StatelessWidget {
   //列表底部加载组件controller
-  LoadMoreController loadMoreController = Get.put(LoadMoreController());
+  final LoadMoreController loadMoreController = Get.put(LoadMoreController());
 
   @override
   Widget build(BuildContext context) {
