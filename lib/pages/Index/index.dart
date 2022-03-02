@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nzz/components/bannerList/banner_list_view.dart';
 import 'package:nzz/components/goods_item_view.dart';
 import 'package:nzz/components/loadMore/load_more_view.dart';
 import 'package:nzz/pages/Index/components/category.dart';
 import 'package:nzz/pages/Index/components/headlines.dart';
-import 'package:nzz/pages/Index/components/qrqm_swiper.dart';
+import 'package:nzz/pages/Index/components/qrqmStore/qrqm_store_view.dart';
 import 'package:nzz/pages/Index/components/scrollBar/scroll_bar_view.dart';
 import 'package:nzz/pages/Index/components/scrollCate/scroll_cate.dart';
 
 import 'package:nzz/basic.dart';
 
-import 'package:nzz/components/nzz_swiper.dart';
 import 'package:nzz/components/sliver_app_bar_delegate.dart';
 import 'package:nzz/components/app_bar.dart';
 import 'package:nzz/components/security_widget.dart';
@@ -40,7 +40,7 @@ class Index extends StatelessWidget {
               });
             },
             child: CustomScrollView(
-              controller: indexController.indexController,
+              controller: indexController.listController,
               slivers: <Widget>[
                 //上面内容
                 SliverToBoxAdapter(
@@ -49,8 +49,8 @@ class Index extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(20.r, 30.r, 20.r, 0),
                       child: Column(
                         children: <Widget>[
-                          //  轮播图
-                          NzzSwiper(280.r),
+                          // 轮播图
+                          BannerListView('0',280.r),
                           SizedBox(height: 15.r),
                           // 保障
                           SecurityWidget(),
@@ -81,7 +81,7 @@ class Index extends StatelessWidget {
                   child: SizedBox(height: 20.r),
                 ),
                 // 千人千面（美食）
-                SliverToBoxAdapter(child: QrqmSwiper()),
+                SliverToBoxAdapter(child: QrqmStoreView()),
                 //可吸顶
                 SliverPersistentHeader(
                   pinned: true,

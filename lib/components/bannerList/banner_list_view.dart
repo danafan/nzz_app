@@ -1,37 +1,40 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-import 'package:nzz/controllers/index_controller.dart';
+import 'package:nzz/components/bannerList/banner_list_controller.dart';
 
-class NzzSwiper extends StatelessWidget {
+class BannerListView extends StatelessWidget {
+  final String type; //类型（首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
   final double height; //高度
-  NzzSwiper(this.height);
-
-  //获取首页数据
-  final IndexController indexController = Get.find<IndexController>();
+  BannerListView(this.type, this.height);
 
   @override
   Widget build(BuildContext context) {
+    //获取banner数据
+    final BannerListController bannerListController =
+        Get.put(BannerListController(type));
     return Container(
         height: height,
-        child: Swiper(
+        child: Obx(() => Swiper(
+            key: UniqueKey(),
             itemBuilder: (BuildContext context, int index) {
-              return Obx(()=>ClipRRect(
+              return ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
-                  child: Image.network(indexController.bannerList[index].value.pic,
-                      fit: BoxFit.cover)));
+                  child: Image.network(
+                      jsonDecode(
+                          bannerListController.bannerList[index].value)['pic'],
+                      fit: BoxFit.cover));
             },
-            itemCount: indexController.bannerList.length,
+            itemCount: bannerListController.bannerList.length,
             autoplay: true,
             pagination: SwiperPagination(
                 alignment: Alignment.bottomRight,
                 builder: SwiperCustomPagination(
                     builder: (BuildContext context, SwiperPluginConfig config) {
                   return CustomPagination(config.activeIndex, config.itemCount);
-                }))));
+                })))));
   }
 }
 

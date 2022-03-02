@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class BannerListModel {
     BannerListModel({
         required this.status,

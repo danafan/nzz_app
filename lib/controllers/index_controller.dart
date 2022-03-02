@@ -1,29 +1,17 @@
-import 'dart:convert';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:nzz/api/common_api.dart';
 import 'package:nzz/api/goods_api.dart';
 import 'package:nzz/components/loadMore/load_more_controller.dart';
 
 class IndexController extends GetxController {
   //列表控制器
-  ScrollController indexController = ScrollController();
+  ScrollController listController = ScrollController();
   //列表底部加载组件controller
   LoadMoreController loadMoreController = Get.put(LoadMoreController());
-
-  //轮播图列表
-  List bannerList = [].obs;
-  // List<String> imgs = [
-  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/671400C0AA454D6DAF30F96F7AA76861",
-  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/0ABA8E7301784E819AE64128A627D4DB",
-  //   "https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/951BD7DD50AF41AAB53B600F088D3E65"
-  // ];
   // 头条列表
   List<String> headlines = ['虎年邀你一起 虎赚赚', '分享创收 0门槛0风险', '严选品质 免费消费'];
   //可滑动分类列表
-  List scrollCateList = [].obs;
+  final scrollCateList = [].obs;
   //千人千面（美食）店铺列表
   List storeList = [
     {
@@ -46,26 +34,24 @@ class IndexController extends GetxController {
     }
   ];
   //列表上面可滑动分类
-  List scrollList = [].obs;
+  final scrollList = [].obs;
 
-  //获取商品列表参数
+  //商品列表
   int page = 1; //当前页码
   dynamic pid = ''; //选中的菜单id
   // 返回数据
   int lastPage = 1; //最后一页的页码
-  List goodsList = [].obs; //商品列表
+  final goodsList = [].obs; //商品列表
 
   @override
   void onInit() {
     super.onInit();
-    //获取banner列表
-    getBannerList();
     //获取商品列表上面可滑动的分类列表
     getCategoryList();
     //列表控制器（监听是否滑动到最底部）
-    indexController.addListener(() {
-      if (indexController.position.pixels ==
-          indexController.position.maxScrollExtent) {
+    listController.addListener(() {
+      if (listController.position.pixels ==
+          listController.position.maxScrollExtent) {
         //页码加1
         if (page < lastPage) {
           page += 1;
@@ -99,17 +85,6 @@ class IndexController extends GetxController {
     getGoodsList();
   }
 
-  //获取banner列表
-  getBannerList() {
-    Map<String, dynamic> params = {
-      'type': 0
-    };
-    CommonAPI.getBannerList(params: params).then((res) => {
-      bannerList = res.data.banner,
-      print(bannerList)
-    });
-  }
-
   //获取商品分类列表（分类和下面商品列表的分类）
   void getCategoryList() {
     GoodsAPI.getCategoryList(params: {'categoryType': '2'})
@@ -141,7 +116,7 @@ class IndexController extends GetxController {
     };
     GoodsAPI.getGoodsList(params: params).then((res) => {
           lastPage = res.data.pages, //最后一页的页码
-          goodsList = goodsList..addAll(res.data.records), //当前页的商品列表
+          goodsList..addAll(res.data.records), //当前页的商品列表
           // 列表底部加载状态组件
           loadMoreController.changeIsLoad(page == lastPage ? false : true)
         });

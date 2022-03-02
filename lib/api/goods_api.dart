@@ -1,5 +1,8 @@
-import 'package:nzz/pages/Index/models/goods_category_model.dart';
-import 'package:nzz/pages/Index/models/goods_list_model.dart';
+import 'dart:convert';
+
+import 'package:nzz/models/goods_category_model.dart';
+import 'package:nzz/models/goods_list_model.dart';
+import 'package:nzz/models/qrqm_store_model.dart';
 import 'package:nzz/utils/request.dart';
 
 
@@ -26,5 +29,13 @@ class GoodsAPI {
       params: params,
     );
     return GoodsListModel.fromJson(response);
+  }
+
+  //首页千人千面
+  static Future getQrqmStoreList() async {
+    var response = await Request().get(
+      'getAdStores'
+    );
+    return QrqmStoreModel.fromJson(response);
   }
 }
