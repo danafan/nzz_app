@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:nzz/controllers/index_controller.dart';
 
-class ScrollBarController extends GetxController {
+class LeftCategoryController extends GetxController {
   
   //当前选中下标
   final currentIndex = 0.obs;

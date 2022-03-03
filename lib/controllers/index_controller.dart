@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:nzz/api/common_api.dart';
 import 'package:nzz/api/goods_api.dart';
 import 'package:nzz/components/loadMore/load_more_controller.dart';
 
@@ -8,9 +9,13 @@ class IndexController extends GetxController {
   ScrollController listController = ScrollController();
   //列表底部加载组件controller
   LoadMoreController loadMoreController = Get.put(LoadMoreController());
+
+  //banner列表
+  final bannerList = [].obs;
+
   // 头条列表
   List<String> headlines = ['虎年邀你一起 虎赚赚', '分享创收 0门槛0风险', '严选品质 免费消费'];
-  //可滑动分类列表
+  //可滑动分类列表(还有分类页面的列表公用)
   final scrollCateList = [].obs;
   //千人千面（美食）店铺列表
   List storeList = [
@@ -46,6 +51,8 @@ class IndexController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //获取banner列表
+    getBannerList();
     //获取商品列表上面可滑动的分类列表
     getCategoryList();
     //列表控制器（监听是否滑动到最底部）
@@ -69,6 +76,14 @@ class IndexController extends GetxController {
 
   @override
   void onClose() {}
+
+  //获取banner列表
+  getBannerList() {
+    Map<String, dynamic> params = {'type': '0'};
+    CommonAPI.getBannerList(params: params).then((res) => {
+          bannerList.value = res.data.banner,
+        });
+  }
 
   //切换列表上面的滑动分类(重新获取列表)
   changeScroll(id) {

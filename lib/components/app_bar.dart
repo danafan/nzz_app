@@ -103,7 +103,7 @@ class AppBarB extends StatelessWidget {
         height: 64.r,
         child: Row(
           children: <Widget>[
-            Icon(Icons.search, size: 42.r, color: Color(0xff999999)),
+            Image.asset('images/appbar_search_icon.png',width: 28.r,height: 28.r),
             SizedBox(width: 6.r),
             Text(placeholder, style: TextStyle(color: Color(0xff999999),fontSize:28.sp))
           ],

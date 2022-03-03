@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-import 'package:nzz/components/bannerList/banner_list_controller.dart';
+import 'package:nzz/basic.dart';
 
 class BannerListView extends StatelessWidget {
-  final String type; //类型（首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
+  final bool showPagination; //banner列表，首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
+  final List bannerList; //banner列表，首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
   final double height; //高度
-  BannerListView(this.type, this.height);
+  BannerListView(this.bannerList, this.height, {this.showPagination = false});
 
   @override
   Widget build(BuildContext context) {
-    //获取banner数据
-    final BannerListController bannerListController =
-        Get.put(BannerListController(type));
     return Container(
         height: height,
         child: Obx(() => Swiper(
@@ -23,18 +21,20 @@ class BannerListView extends StatelessWidget {
               return ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
                   child: Image.network(
-                      jsonDecode(
-                          bannerListController.bannerList[index].value)['pic'],
+                      jsonDecode(bannerList[index].value)['pic'],
                       fit: BoxFit.cover));
             },
-            itemCount: bannerListController.bannerList.length,
-            autoplay: true,
-            pagination: SwiperPagination(
-                alignment: Alignment.bottomRight,
-                builder: SwiperCustomPagination(
-                    builder: (BuildContext context, SwiperPluginConfig config) {
-                  return CustomPagination(config.activeIndex, config.itemCount);
-                })))));
+            itemCount: bannerList.length,
+            autoplay: bannerList.length > 1 ? true : false,
+            pagination: showPagination
+                ? SwiperPagination(
+                    alignment: Alignment.bottomCenter,
+                    builder: SwiperCustomPagination(builder:
+                        (BuildContext context, SwiperPluginConfig config) {
+                      return CustomPagination(
+                          config.activeIndex, config.itemCount);
+                    }))
+                : null)));
   }
 }
 
@@ -47,8 +47,23 @@ class CustomPagination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
-      child: Text(activeIndex.toString() + '/' + itemCount.toString()),
+      width: itemCount*15.r + (itemCount + 1)*10.r,
+      child: paginationItem(activeIndex, itemCount),
     );
   }
+}
+
+//指示器的所有点
+Widget paginationItem(activeIndex, itemCount) {
+  List<Widget> itemList = [];
+  for (int i = 0; i < itemCount; i++) {
+    itemList.add(Container(
+        width: 15.r,
+        height: 4.r,
+        color: activeIndex == i ? ColorStyle.colorWhite : Color(0xcc000000)));
+  }
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: itemList,
+  );
 }

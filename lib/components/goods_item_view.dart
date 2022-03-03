@@ -63,7 +63,7 @@ class GoodsItemView extends StatelessWidget {
                       Offstage(
                           offstage: goodsItem.thirdPrice <= 0,
                           child: Text(
-                              '淘宝价${goodsItem.thirdPrice.toStringAsFixed(1)}元',
+                              '${goodsItem.thirdCompareName}${goodsItem.thirdPrice.toStringAsFixed(1)}元',
                               style: TextStyle(
                                   color: ColorStyle.colorDesc,
                                   fontSize: 20.r,

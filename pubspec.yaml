@@ -24,6 +24,7 @@ dev_dependencies:
 flutter: 
   uses-material-design: true
   assets:
+    - images/appbar_search_icon.png
     - images/focus_icon.png
     - images/quality_icon.png
     - images/money_icon.png
@@ -37,5 +38,8 @@ flutter:
     - images/xkzx_icon.png
     - images/star_light.png
     - images/star_dark.png
+    - images/cate_scroll_icon.png
+    - images/cate_toogle_close.png
+    
     
 
