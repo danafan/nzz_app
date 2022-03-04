@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/components/zf_tag_widget.dart';
 import 'package:nzz/basic.dart';
 
-class GoodsItemView extends StatelessWidget {
+class GoodsItemGridView extends StatelessWidget {
   //每一个 商品
   final goodsItem;
-  GoodsItemView(this.goodsItem);
+  GoodsItemGridView(this.goodsItem);
 
   @override
   Widget build(BuildContext context) {

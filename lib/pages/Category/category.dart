@@ -8,6 +8,7 @@ import 'package:nzz/components/sortWidget/sort_widget_view.dart';
 import 'package:nzz/controllers/category_controller.dart';
 import 'package:nzz/pages/Category/components/cateToogle/cate_position_view.dart';
 import 'package:nzz/pages/Category/components/cateToogle/cate_toogle_view.dart';
+import 'package:nzz/pages/Category/components/cate_goods_list.dart';
 import 'package:nzz/pages/Category/components/leftCategory/left_category_view.dart';
 
 class CateGory extends StatelessWidget {
@@ -39,22 +40,34 @@ class CateGory extends StatelessWidget {
                             showPagination: true),
                       ),
                       Expanded(
-                          child: Stack(children: <Widget>[
-                        //可滑动分类
-                        CateToogleView(),
-                        //排序条件
-                        Positioned(top: 90.r, left: 0, child: SortWidget()),
-                        Positioned(
-                            top: 178.r,
-                            left: 0,
-                            child:Container(
-                              decoration: BoxDecoration(border: Border.all()),
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                            )),
-                        //绝对定位元素
-                        CatePositionView()
-                      ]))
+                          child: IndexedStack(
+                        index: 1,
+                        children: <Widget>[
+                          Column(children: <Widget>[
+                            //可滑动分类
+                            CateToogleView(),
+                            //排序条件
+                            SortWidget(),
+                            // 商品列表
+                            Expanded(child: CateGoodsList()),
+                            //绝对定位元素
+                            // Positioned(child: CatePositionView())
+                          ]),
+                          Positioned(child: CatePositionView())
+                        ],
+                      ))
+                      // Expanded(
+                      //     child: Column(children: <Widget>[
+                      //   //可滑动分类
+                      //   CateToogleView(),
+                      //   //排序条件
+                      //   SortWidget(),
+                      //   // 商品列表
+                      //   Expanded(
+                      //       child: CateGoodsList()),
+                      //   //绝对定位元素
+                      //   // Positioned(child: CatePositionView())
+                      // ]))
                     ])))
           ],
         ))

@@ -33,6 +33,8 @@ class CategoryController extends GetxController {
     getBannerList();
     //获取商品分类列表
     getCategoryList();
+    //获取商品列表
+    getGoodsList();
   }
 
   @override

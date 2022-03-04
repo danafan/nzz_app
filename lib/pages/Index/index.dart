@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/components/bannerList/banner_list_view.dart';
-import 'package:nzz/components/goods_item_view.dart';
+import 'package:nzz/components/goods_item_grid_view.dart';
 import 'package:nzz/components/loadMore/load_more_view.dart';
 import 'package:nzz/pages/Index/components/category.dart';
 import 'package:nzz/pages/Index/components/headlines.dart';
@@ -101,7 +101,7 @@ class Index extends StatelessWidget {
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 //创建子widget
-                                return GoodsItemView(
+                                return GoodsItemGridView(
                                     indexController.goodsList[index]);
                               },
                               childCount: indexController.goodsList.length,
