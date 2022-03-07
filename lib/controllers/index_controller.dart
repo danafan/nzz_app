@@ -2,13 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nzz/api/common_api.dart';
 import 'package:nzz/api/goods_api.dart';
-import 'package:nzz/components/loadMore/load_more_controller.dart';
 
 class IndexController extends GetxController {
   //列表控制器
   ScrollController listController = ScrollController();
-  //列表底部加载组件controller
-  LoadMoreController loadMoreController = Get.put(LoadMoreController());
 
   //banner列表
   final bannerList = [].obs;
@@ -42,6 +39,8 @@ class IndexController extends GetxController {
   final scrollList = [].obs;
 
   //商品列表
+  final loadNum = 0.obs;  //获取列表的次数（控制列表的加载中和空页面）
+  final isLoad = true.obs;  //底部加载组件
   int page = 1; //当前页码
   dynamic pid = ''; //选中的菜单id
   // 返回数据
@@ -132,8 +131,9 @@ class IndexController extends GetxController {
     GoodsAPI.getGoodsList(params: params).then((res) => {
           lastPage = res.data.pages, //最后一页的页码
           goodsList..addAll(res.data.records), //当前页的商品列表
+          loadNum.value =  loadNum.value == 0?loadNum.value + 1:loadNum.value, //累计获取的次数
           // 列表底部加载状态组件
-          loadMoreController.changeIsLoad(page == lastPage ? false : true)
+          isLoad.value = page == lastPage ? false : true
         });
   }
 }

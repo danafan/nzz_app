@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 import 'package:nzz/components/app_bar.dart';
 import 'package:nzz/components/bannerList/banner_list_view.dart';
+import 'package:nzz/components/listLoadEmpty/list_load_empty_view.dart';
 import 'package:nzz/components/sortWidget/sort_widget_view.dart';
 import 'package:nzz/controllers/category_controller.dart';
 import 'package:nzz/pages/Category/components/cateToogle/cate_position_view.dart';
@@ -40,34 +41,29 @@ class CateGory extends StatelessWidget {
                             showPagination: true),
                       ),
                       Expanded(
-                          child: IndexedStack(
-                        index: 1,
-                        children: <Widget>[
-                          Column(children: <Widget>[
-                            //可滑动分类
-                            CateToogleView(),
-                            //排序条件
-                            SortWidget(),
-                            // 商品列表
-                            Expanded(child: CateGoodsList()),
-                            //绝对定位元素
-                            // Positioned(child: CatePositionView())
-                          ]),
-                          Positioned(child: CatePositionView())
-                        ],
-                      ))
-                      // Expanded(
-                      //     child: Column(children: <Widget>[
-                      //   //可滑动分类
-                      //   CateToogleView(),
-                      //   //排序条件
-                      //   SortWidget(),
-                      //   // 商品列表
-                      //   Expanded(
-                      //       child: CateGoodsList()),
-                      //   //绝对定位元素
-                      //   // Positioned(child: CatePositionView())
-                      // ]))
+                          child: Obx(() => IndexedStack(
+                                index: categoryController.isOpen.value,
+                                children: <Widget>[
+                                  // 筛选条件和列表
+                                  Column(children: <Widget>[
+                                    //可滑动分类
+                                    CateToogleView(),
+                                    //排序条件
+                                    SortWidget(),
+                                    // 商品列表
+                                    Expanded(
+                                        child: categoryController.loadNum == 0
+                                            ? ListLoadEmptyView(false)
+                                            : categoryController.loadNum == 1 &&
+                                                    categoryController
+                                                        .goodsList.isEmpty
+                                                ? ListLoadEmptyView(true)
+                                                : CateGoodsList()),
+                                  ]),
+                                  // 分类遮罩
+                                  Positioned(child: CatePositionView())
+                                ],
+                              )))
                     ])))
           ],
         ))

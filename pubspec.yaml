@@ -40,6 +40,9 @@ flutter:
     - images/star_dark.png
     - images/cate_scroll_icon.png
     - images/cate_toogle_close.png
+    - images/jpg_tag.png
+    - images/ksz_tag.png
+    - images/empty_icon.png
     
     
 

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/components/bannerList/banner_list_view.dart';
 import 'package:nzz/components/goods_item_grid_view.dart';
-import 'package:nzz/components/loadMore/load_more_view.dart';
+import 'package:nzz/components/listLoadEmpty/list_load_empty_view.dart';
+import 'package:nzz/components/load_more_view.dart';
 import 'package:nzz/pages/Index/components/category.dart';
 import 'package:nzz/pages/Index/components/headlines.dart';
 import 'package:nzz/pages/Index/components/qrqmStore/qrqm_store_view.dart';
@@ -82,7 +83,7 @@ class Index extends StatelessWidget {
                       child: SizedBox(height: 20.r),
                     ),
                     // 千人千面（美食）
-                    SliverToBoxAdapter(child: QrqmStoreView()),
+                    // SliverToBoxAdapter(child: QrqmStoreView()),
                     //可吸顶
                     SliverPersistentHeader(
                       pinned: true,
@@ -97,24 +98,36 @@ class Index extends StatelessWidget {
                     Obx(() => SliverPadding(
                         padding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 20.r),
-                        sliver: SliverGrid(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                //创建子widget
-                                return GoodsItemGridView(
-                                    indexController.goodsList[index]);
-                              },
-                              childCount: indexController.goodsList.length,
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 10.r, //主轴中间间距
-                              crossAxisSpacing: 10.r, //副轴中间间距
-                              childAspectRatio: 0.63, //item 宽高比
-                            )))),
+                        sliver: indexController.loadNum == 0
+                            ? SliverToBoxAdapter(
+                                child: ListLoadEmptyView(false))
+                            : indexController.loadNum == 1 &&
+                                    indexController.goodsList.isEmpty
+                                ? SliverToBoxAdapter(
+                                    child: ListLoadEmptyView(true))
+                                : SliverGrid(
+                                    delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                        //创建子widget
+                                        return GoodsItemGridView(
+                                            indexController.goodsList[index]);
+                                      },
+                                      childCount:
+                                          indexController.goodsList.length,
+                                    ),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 10.r, //主轴中间间距
+                                      crossAxisSpacing: 10.r, //副轴中间间距
+                                      childAspectRatio: 0.63, //item 宽高比
+                                    )))),
                     // 列表加载状态
-                    SliverToBoxAdapter(child: LoadMoreView())
+                    SliverToBoxAdapter(
+                        child: Offstage(
+                      offstage: indexController.goodsList.isEmpty,
+                      child: LoadMoreView(indexController.isLoad.value),
+                    ))
                   ],
                 ),
               ),

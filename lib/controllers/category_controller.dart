@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nzz/api/common_api.dart';
 import 'package:nzz/api/goods_api.dart';
 
 class CategoryController extends GetxController {
+   //列表控制器
+  ScrollController listController = ScrollController();
 
   //banner列表（type:4）
   final bannerList = [].obs;
@@ -13,12 +18,16 @@ class CategoryController extends GetxController {
   final leftCurrentIndex = 0.obs;
    //左侧当前选中标题
   final leftCurrentTitle = ''.obs;
+  //右侧是否展开选项
+  final isOpen = 0.obs;
   //右侧子分类列表
   final rightCateList = [].obs;
   //右侧当前选中下标
   final rightCurrentIndex = 0.obs;
 
   //商品列表
+  final loadNum = 0.obs;  //获取列表的次数（控制列表的加载中和空页面）
+  final isLoad = true.obs;  //底部加载组件
   int page = 1; //当前页码
   dynamic pid = ''; //选中的左侧分类id
   dynamic sid = ''; //右侧子分类选中id
@@ -29,12 +38,22 @@ class CategoryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //列表控制器（监听是否滑动到最底部）
+    listController.addListener(() {
+      if (listController.position.pixels ==
+          listController.position.maxScrollExtent) {
+        //页码加1
+        if (page < lastPage) {
+          page += 1;
+          //获取商品列表
+          getGoodsList();
+        }
+      }
+    });
     //获取banner列表
     getBannerList();
     //获取商品分类列表
     getCategoryList();
-    //获取商品列表
-    getGoodsList();
   }
 
   @override
@@ -64,11 +83,12 @@ class CategoryController extends GetxController {
                     {leftCateList.add(res.data[i])},
                 },
               rightCateList.value = leftCateList[0].children, //右侧子分类列表
+              // pid = leftCateList[leftCateList.length - 1].id, //设置请求参数pid(左侧选中id)
               pid = leftCateList[0].id, //设置请求参数pid(左侧选中id)
               sid = leftCateList[0].children[0].id, //设置请求参数sid(右侧子分类选中id)
-              leftCurrentTitle.value = leftCateList[0].cateName,
+              leftCurrentTitle.value = leftCateList[0].cateName, //左侧当前选中标题
             })
-        // .then((value) => getGoodsList())
+        .then((value) => getGoodsList())
         ;
   }
 
@@ -87,8 +107,9 @@ class CategoryController extends GetxController {
     GoodsAPI.getGoodsList(params: params).then((res) => {
           lastPage = res.data.pages, //最后一页的页码
           goodsList..addAll(res.data.records), //当前页的商品列表
+          loadNum.value =  loadNum.value == 0?loadNum.value + 1:loadNum.value, //累计获取的次数
           // 列表底部加载状态组件
-          // loadMoreController.changeIsLoad(page == lastPage ? false : true)
+          isLoad.value = page == lastPage ? false : true
         });
   }
 
@@ -102,6 +123,11 @@ class CategoryController extends GetxController {
     rightCurrentIndex.value = 0;
     //右侧子分类列表
     rightCateList.value = leftCateList[i].children;
+  }
+
+  //切换右侧展开收起
+  void changeOpenStatus(type) {
+    isOpen.value = type;
   }
 
   //切换右侧当前选中下标
