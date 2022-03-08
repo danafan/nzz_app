@@ -3,14 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 import 'package:nzz/controllers/category_controller.dart';
-import 'package:nzz/pages/Category/components/cateToogle/cate_toogle_controller.dart';
 
 class CateToogleView extends StatelessWidget {
   //分类controller
   final CategoryController categoryController = Get.find<CategoryController>();
-  //分类滑动controller
-  final CateToogleController cateToogleController =
-      Get.put(CateToogleController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +18,7 @@ class CateToogleView extends StatelessWidget {
               Expanded(
                   child: Obx(() => ListView.builder(
                         scrollDirection: Axis.horizontal,
+                        controller: categoryController.childCateController,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             child: Obx(() => Container(

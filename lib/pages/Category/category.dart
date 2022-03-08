@@ -52,9 +52,9 @@ class CateGory extends StatelessWidget {
                                     SortWidget(),
                                     // 商品列表
                                     Expanded(
-                                        child: categoryController.loadNum == 0
+                                        child: categoryController.loadNum.toInt() == 0
                                             ? ListLoadEmptyView(false)
-                                            : categoryController.loadNum == 1 &&
+                                            : categoryController.loadNum.toInt() == 1 &&
                                                     categoryController
                                                         .goodsList.isEmpty
                                                 ? ListLoadEmptyView(true)

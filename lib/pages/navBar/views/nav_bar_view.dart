@@ -10,16 +10,16 @@ class NavBarView extends GetView<NavBarController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() => IndexedStack(
-        index: controller.currentPageIndex.toInt(),
-        children: controller.pageList,
-      )),
+            index: controller.currentPageIndex.toInt(),
+            children: controller.pageList,
+          )),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
           currentIndex: controller.currentPageIndex.toInt(),
           onTap: (index) {
             controller.checkPageIndex(index);
           },
           type: BottomNavigationBarType.fixed,
-          backgroundColor:Colors.white,
+          backgroundColor: Colors.white,
           fixedColor: ColorStyle.colorPrimary,
           items: controller.buttonList)),
     );

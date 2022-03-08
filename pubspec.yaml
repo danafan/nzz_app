@@ -43,6 +43,9 @@ flutter:
     - images/jpg_tag.png
     - images/ksz_tag.png
     - images/empty_icon.png
+    - images/sort_default.png
+    - images/sort_up.png
+    - images/sort_down.png
     
     
 

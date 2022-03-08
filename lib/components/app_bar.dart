@@ -15,7 +15,9 @@ class AppBarWidget extends StatelessWidget {
       this.placeholder = '',
       this.title = '',
       this.isPrimary = true,
-      this.inputBackDark = false});
+      this.inputBackDark = false,
+
+      });
 
   @override
   Widget build(BuildContext context) {

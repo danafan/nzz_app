@@ -3,18 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 import 'package:nzz/controllers/category_controller.dart';
-import 'package:nzz/pages/Category/components/cateToogle/cate_toogle_controller.dart';
 
 class CatePositionView extends StatelessWidget {
   //分类controller
   final CategoryController categoryController = Get.find<CategoryController>();
-  //分类滑动controller
-  final CateToogleController cateToogleController =
-      Get.put(CateToogleController());
 
   @override
   Widget build(BuildContext context) {
-    return Container(child:Column(
+    return Container(
+        child: Column(
       children: <Widget>[
         Container(
           height: 90.r,
@@ -65,34 +62,41 @@ class CatePositionView extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     itemCount: categoryController.rightCateList.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                          width: 185.r,
-                          height: 228.r,
-                          child: Column(
-                            children: [
-                              Image.network(
-                                categoryController.rightCateList[index].pic,
-                                width: 155.r,
-                                height: 155.r,
-                                fit: BoxFit.cover,
-                              ),
-                              SizedBox(height: 20.r),
-                              Container(
-                                width: 155.r,
-                                child: Text(
-                                  categoryController
-                                      .rightCateList[index].cateName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: ColorStyle.colorTitle,
-                                      fontSize: 24.r,
-                                      fontWeight: FontWeight.w400),
+                      return GestureDetector(
+                        onTap: () {
+                          //切换选项
+                          categoryController.changeRightCurrentIndex(index);
+                          categoryController.changeOpenStatus(0);
+                        },
+                        child: Container(
+                            width: 185.r,
+                            height: 228.r,
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  categoryController.rightCateList[index].pic,
+                                  width: 155.r,
+                                  height: 155.r,
+                                  fit: BoxFit.cover,
                                 ),
-                              ),
-                            ],
-                          ));
+                                SizedBox(height: 20.r),
+                                Container(
+                                  width: 155.r,
+                                  child: Text(
+                                    categoryController
+                                        .rightCateList[index].cateName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: ColorStyle.colorTitle,
+                                        fontSize: 24.r,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ],
+                            )),
+                      );
                     },
                   ))),
         ),

@@ -33,7 +33,8 @@ class Index extends StatelessWidget {
                 type: '2',
                 placeholder: '搜索商品',
                 inputBackDark: true,
-                isPrimary: false),
+                isPrimary: false,
+                ),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
@@ -83,7 +84,7 @@ class Index extends StatelessWidget {
                       child: SizedBox(height: 20.r),
                     ),
                     // 千人千面（美食）
-                    // SliverToBoxAdapter(child: QrqmStoreView()),
+                    SliverToBoxAdapter(child: QrqmStoreView()),
                     //可吸顶
                     SliverPersistentHeader(
                       pinned: true,
@@ -98,10 +99,10 @@ class Index extends StatelessWidget {
                     Obx(() => SliverPadding(
                         padding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 20.r),
-                        sliver: indexController.loadNum == 0
+                        sliver: indexController.loadNum.toInt() == 0
                             ? SliverToBoxAdapter(
                                 child: ListLoadEmptyView(false))
-                            : indexController.loadNum == 1 &&
+                            : indexController.loadNum.toInt() == 1 &&
                                     indexController.goodsList.isEmpty
                                 ? SliverToBoxAdapter(
                                     child: ListLoadEmptyView(true))
@@ -123,11 +124,11 @@ class Index extends StatelessWidget {
                                       childAspectRatio: 0.63, //item 宽高比
                                     )))),
                     // 列表加载状态
-                    SliverToBoxAdapter(
+                     Obx(() => SliverToBoxAdapter(
                         child: Offstage(
                       offstage: indexController.goodsList.isEmpty,
                       child: LoadMoreView(indexController.isLoad.value),
-                    ))
+                    )))
                   ],
                 ),
               ),

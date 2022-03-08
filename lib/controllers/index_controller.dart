@@ -87,6 +87,7 @@ class IndexController extends GetxController {
   //切换列表上面的滑动分类(重新获取列表)
   changeScroll(id) {
     pid = id;
+    loadNum.value = 0;
     //下拉刷新
     refreshGoodsList();
   }

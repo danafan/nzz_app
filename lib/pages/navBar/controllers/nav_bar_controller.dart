@@ -8,6 +8,7 @@ import 'package:nzz/pages/Shopcar/shopcar.dart';
 import 'package:nzz/pages/Mine/mine.dart';
 
 class NavBarController extends GetxController {
+
   //当前选中的tab下标
   var currentPageIndex = 0.obs;
 
