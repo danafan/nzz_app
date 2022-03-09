@@ -1,18 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:nzz/components/grade_star_view.dart';
 import 'package:nzz/basic.dart';
+import 'package:nzz/controllers/index_controller.dart';
 import 'package:nzz/models/qrqm_store_model.dart';
-import 'package:nzz/pages/Index/components/qrqmStore/qrqm_store_controller.dart';
 
 class QrqmStoreView extends StatelessWidget {
-  //千人千面
-  final QrqmStoreController qrqmStoreController =
-      Get.put(QrqmStoreController());
+
+  //首页数据controller
+  final IndexController indexController = Get.put(IndexController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class QrqmStoreView extends StatelessWidget {
                     ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
                         child: Image.network(
-                            qrqmStoreController.storeList[index].image,
+                            indexController.storeList[index].image,
                             fit: BoxFit.cover,
                             width: 215.r,
                             height: 215.r)),
@@ -55,7 +53,7 @@ class QrqmStoreView extends StatelessWidget {
                                             children: <Widget>[
                                       // 店铺名称
                                       Text(
-                                          qrqmStoreController
+                                          indexController
                                               .storeList[index].name,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -66,14 +64,14 @@ class QrqmStoreView extends StatelessWidget {
                                       // 星级评分
                                       Row(children: <Widget>[
                                         GradeStarView(
-                                            qrqmStoreController
+                                            indexController
                                                 .storeList[index].star,
                                             size: 30),
                                         SizedBox(width: 5.r),
                                         RichText(
                                           text: TextSpan(
                                             text:
-                                                '${qrqmStoreController.storeList[index].star}',
+                                                '${indexController.storeList[index].star}',
                                             style: TextStyle(
                                                 color: Color(0xffff4500),
                                                 fontSize: 24.r,
@@ -94,7 +92,7 @@ class QrqmStoreView extends StatelessWidget {
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                            qrqmStoreController
+                                            indexController
                                                 .storeList[index].foodType,
                                             style: TextStyle(
                                                 color: ColorStyle.colorDesc,
@@ -103,7 +101,7 @@ class QrqmStoreView extends StatelessWidget {
                                           SizedBox(width: 20.r),
                                           Expanded(
                                               child: Text(
-                                            qrqmStoreController
+                                            indexController
                                                 .storeList[index].address,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -130,13 +128,13 @@ class QrqmStoreView extends StatelessWidget {
                                       )
                                     ]))),
                                 // 券/惠
-                                preWidget(qrqmStoreController
+                                preWidget(indexController
                                     .storeList[index].productVos),
                               ],
                             )))
                   ]));
             },
-            itemCount: qrqmStoreController.storeList.length,
+            itemCount: indexController.storeList.length,
             autoplay: true)));
   }
 }

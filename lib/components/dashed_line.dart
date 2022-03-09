@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// 虚线组件
 class DashedLine extends StatelessWidget {
   final Axis axis; // 方向
   final double width; //宽度

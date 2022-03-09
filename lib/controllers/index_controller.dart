@@ -15,28 +15,19 @@ class IndexController extends GetxController {
   //可滑动分类列表(还有分类页面的列表公用)
   final scrollCateList = [].obs;
   //千人千面（美食）店铺列表
-  List storeList = [
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/F415FE4872DC447CBD3F30E940D8034F',
-      'store_name': '浅草君日料',
-      'score': 2.0
-    },
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/5312EE26BA6B4E918239A3A27EB715FB',
-      'store_name': '海底捞火锅',
-      'score': 3.6
-    },
-    {
-      'img':
-          'https://zhuanzhuanyanxuan.oss-cn-beijing.aliyuncs.com/4D36ED8A08CB4DE4AC3FBBF131AFDBC1',
-      'store_name': '东北风菜馆',
-      'score': 4.5
-    }
-  ];
+  final storeList = [].obs;
   //列表上面可滑动分类
   final scrollList = [].obs;
+  //列表上面可滑动分类当前选中下标
+  final currentIndex = 0.obs;
+  //切换当前选中下标
+  void changeCurrentIndex(i){
+    currentIndex.value = i;
+    pid = scrollList[i].id;
+    loadNum.value = 0;
+     //下拉刷新
+    refreshGoodsList();
+  }
 
   //商品列表
   final loadNum = 0.obs;  //获取列表的次数（控制列表的加载中和空页面）
@@ -52,6 +43,8 @@ class IndexController extends GetxController {
     super.onInit();
     //获取banner列表
     getBannerList();
+    //千人千面列表
+    getQrqmStoreList();
     //获取商品列表上面可滑动的分类列表
     getCategoryList();
     //列表控制器（监听是否滑动到最底部）
@@ -84,20 +77,19 @@ class IndexController extends GetxController {
         });
   }
 
-  //切换列表上面的滑动分类(重新获取列表)
-  changeScroll(id) {
-    pid = id;
-    loadNum.value = 0;
-    //下拉刷新
-    refreshGoodsList();
-  }
-
   //下拉刷新
   void refreshGoodsList() {
     page = 1;
     goodsList.clear();
     //获取商品列表
     getGoodsList();
+  }
+
+  //千人千面列表
+  void getQrqmStoreList() {
+    GoodsAPI.getQrqmStoreList().then((res) => {
+      storeList.value = res.data.adStores,
+    });
   }
 
   //获取商品分类列表（分类和下面商品列表的分类）

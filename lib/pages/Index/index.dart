@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nzz/components/bannerList/banner_list_view.dart';
+import 'package:nzz/components/banner_list_view.dart';
 import 'package:nzz/components/goods_item_grid_view.dart';
-import 'package:nzz/components/listLoadEmpty/list_load_empty_view.dart';
+import 'package:nzz/components/list_load_empty.dart';
 import 'package:nzz/components/load_more_view.dart';
 import 'package:nzz/pages/Index/components/category.dart';
 import 'package:nzz/pages/Index/components/headlines.dart';
-import 'package:nzz/pages/Index/components/qrqmStore/qrqm_store_view.dart';
-import 'package:nzz/pages/Index/components/scrollBar/scroll_bar_view.dart';
+import 'package:nzz/pages/Index/components/qrqm_store_view.dart';
+import 'package:nzz/pages/Index/components/scroll_bar_view.dart';
 import 'package:nzz/pages/Index/components/scrollCate/scroll_cate.dart';
 
 import 'package:nzz/basic.dart';
@@ -30,11 +30,11 @@ class Index extends StatelessWidget {
         body: Column(
           children: <Widget>[
             AppBarWidget(
-                type: '2',
-                placeholder: '搜索商品',
-                inputBackDark: true,
-                isPrimary: false,
-                ),
+              type: '2',
+              placeholder: '搜索商品',
+              inputBackDark: true,
+              isPrimary: false,
+            ),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
@@ -84,7 +84,11 @@ class Index extends StatelessWidget {
                       child: SizedBox(height: 20.r),
                     ),
                     // 千人千面（美食）
-                    SliverToBoxAdapter(child: QrqmStoreView()),
+                    SliverToBoxAdapter(
+                        child: Offstage(
+                            offstage:
+                                indexController.storeList.length.toInt() == 0,
+                            child: QrqmStoreView())),
                     //可吸顶
                     SliverPersistentHeader(
                       pinned: true,
@@ -124,11 +128,11 @@ class Index extends StatelessWidget {
                                       childAspectRatio: 0.63, //item 宽高比
                                     )))),
                     // 列表加载状态
-                     Obx(() => SliverToBoxAdapter(
-                        child: Offstage(
-                      offstage: indexController.goodsList.isEmpty,
-                      child: LoadMoreView(indexController.isLoad.value),
-                    )))
+                    Obx(() => SliverToBoxAdapter(
+                            child: Offstage(
+                          offstage: indexController.goodsList.isEmpty,
+                          child: LoadMoreView(indexController.isLoad.value),
+                        )))
                   ],
                 ),
               ),

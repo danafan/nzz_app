@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/basic.dart';
 
+//首页轮播图下面的红色提示
 class SecurityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

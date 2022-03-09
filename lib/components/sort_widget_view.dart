@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
-import 'package:nzz/controllers/category_controller.dart';
 
+
+//排序组件
 class SortWidget extends StatelessWidget {
-  
-  //分类controller
-  final CategoryController categoryController = Get.find<CategoryController>();
+
+  final int currentSortIndex; //当前选中的下标
+  final List sortList;        //选项列表
+  final Function changeSort;  //切换选项的方法
+  SortWidget(this.currentSortIndex,this.sortList,this.changeSort);
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +22,20 @@ class SortWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20.r),
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          var item = categoryController.sortList[index];
+          var item = sortList[index];
           return GestureDetector(
               onTap: () {
-                categoryController.changeSort(index);
+                changeSort(index);
               },
-              child: Obx(() => Container(
+              child: Container(
                   margin: EdgeInsets.only(right: 22.r),
                   decoration: BoxDecoration(
                       border: Border.all(
                           color:
-                              categoryController.currentSortIndex.value == index
+                              currentSortIndex == index
                                   ? ColorStyle.colorPrimary
                                   : ColorStyle.colorBackGround),
-                      color: categoryController.currentSortIndex.value == index
+                      color: currentSortIndex == index
                           ? Color(0x19fe3c50)
                           : ColorStyle.colorBackGround,
                       borderRadius: BorderRadius.circular(24.r)),
@@ -46,13 +48,13 @@ class SortWidget extends StatelessWidget {
                       Text(
                         '${item['name']}',
                         style: TextStyle(
-                            color: categoryController.currentSortIndex.value ==
+                            color: currentSortIndex ==
                                     index
                                 ? ColorStyle.colorPrimary
                                 : ColorStyle.colorText,
                             fontSize: 24.r,
                             fontWeight:
-                                categoryController.currentSortIndex.value ==
+                                currentSortIndex ==
                                         index
                                     ? FontWeight.w600
                                     : FontWeight.w400),
@@ -62,16 +64,14 @@ class SortWidget extends StatelessWidget {
                           child: SizedBox(width: 3.r)),
                       Offstage(
                           offstage: item['haveIcon'] == false,
-                          child: Image.asset(
-                              categoryController.currentSortIndex.value == index
-                                  ? categoryController.sortIcon.value
-                                  : 'images/sort_default.png',
+                          child: Image.asset(item['sortIcon'],
                               width: 14.r,
-                              height: 21.r))
+                              height: 21.r)
+                              )
                     ],
-                  ))));
+                  )));
         },
-        itemCount: categoryController.sortList.length,
+        itemCount: sortList.length,
       ),
     );
   }

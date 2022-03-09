@@ -5,9 +5,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 
+// 轮播图组件
 class BannerListView extends StatelessWidget {
-  final bool showPagination; //banner列表，首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
-  final List bannerList; //banner列表，首页0,快速赚1,特惠拼2,广告位3,分类4,精品馆5,购物券6）
+  final bool showPagination; //是否显示指示器
+  final List bannerList; //banner列表
   final double height; //高度
   BannerListView(this.bannerList, this.height, {this.showPagination = false});
 

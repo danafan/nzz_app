@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// 星级评分显示组件
 class GradeStarView extends StatelessWidget {
   //当前分数
   final double score;

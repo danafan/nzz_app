@@ -139,51 +139,52 @@ class CategoryController extends GetxController {
       "name":"综合",
       "key":"homeOrder",
       "sort":"true",
-      "haveIcon":false
+      "haveIcon":false,
+      "sortIcon":"images/sort_default.png"
     },{
       "name":"销量",
       "key":"salesOrder",
       "sort":"",
-      "haveIcon":true
+      "haveIcon":true,
+      "sortIcon":"images/sort_default.png"
     },{
       "name":"价格",
       "key":"priceOrder",
       "sort":"",
-      "haveIcon":true
+      "haveIcon":true,
+      "sortIcon":"images/sort_default.png"
     }];
 
   // 筛选条件当前选中的下标
   final currentSortIndex = 0.obs;
-  final sortIcon = 'images/sort_default.png'.obs;
 
   //切换排序条件
   void changeSort(index){
     if(index == currentSortIndex.value){  //如果点击的是当前选中的（只判断有图标的）
       if(sortList[index]['sort'] == 'asc'){
         sortList[index]['sort'] = 'desc';
+        sortList[index]['sortIcon'] = 'images/sort_down.png';
       }else if(sortList[index]['sort'] == 'desc'){
         sortList[index]['sort'] = 'asc';
+        sortList[index]['sortIcon'] = 'images/sort_up.png';
       }
     }else{
       currentSortIndex.value = index;
       for(int i = 0;i < sortList.length;i ++){
         if(currentSortIndex.value != i){
           sortList[i]['sort'] = '';
+          if(sortList[i]['haveIcon'] == true){
+            sortList[i]['sortIcon'] = 'images/sort_default.png';
+          }
         }else{
           if(currentSortIndex.value == 0){
             sortList[i]['sort'] = 'true';
           }else{
             sortList[i]['sort'] = 'asc';
+            sortList[i]['sortIcon'] = 'images/sort_up.png';
           }
         }
       }
-    }
-    if(sortList[currentSortIndex.value]['sort'] == ''){
-      sortIcon.value = 'images/sort_up.png';
-    }else if(sortList[currentSortIndex.value]['sort'] == 'asc'){
-      sortIcon.value = 'images/sort_up.png';
-    }else if(sortList[currentSortIndex.value]['sort'] == 'desc'){
-      sortIcon.value = 'images/sort_down.png';
     }
     //请求次数清0
     loadNum.value = 0;

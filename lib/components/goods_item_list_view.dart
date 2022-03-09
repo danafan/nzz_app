@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/basic.dart';
 import 'package:nzz/components/zf_tag_widget.dart';
 
+// 商品list列表item组件
 class GoodsItemListView extends StatelessWidget {
   final item;
   GoodsItemListView(this.item);
@@ -42,6 +43,7 @@ class GoodsItemListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       RichText(
@@ -69,13 +71,17 @@ class GoodsItemListView extends StatelessWidget {
                           // 不是购物券商城
                           Offstage(
                               offstage: item.type != 2,
-                              child: ZfTagWidget('自购省', ColorStyle.colorPrimary,
-                                  item.selfBuyMoney.toStringAsFixed(1))),
+                              child: ZfTagWidget(
+                                  '自购省',
+                                  ColorStyle.colorPrimary,
+                                  item.selfBuyMoney
+                                      .toDouble()
+                                      .toStringAsFixed(1))),
                           Offstage(
                               offstage: item.type != 2,
                               child: SizedBox(width: 10.r)),
                           ZfTagWidget('分享赚', Color(0xffff5232),
-                              item.shareBuyMoney.toStringAsFixed(1)),
+                              item.shareBuyMoney.toDouble().toStringAsFixed(1)),
                         ],
                       )
                     ],
@@ -113,8 +119,8 @@ Widget thirdTag(labelText, number) {
         border: Border.all(color: Color(0xffFF932A)),
         borderRadius: BorderRadius.circular(6.r)),
     height: 30.r,
-    width: 124.r,
     child: Row(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
             color: Color(0xffFF932A),
@@ -127,17 +133,17 @@ Widget thirdTag(labelText, number) {
                   fontSize: 20.r,
                   fontWeight: FontWeight.w600),
             )),
-        Expanded(
-            child: Container(
-                color: ColorStyle.colorWhite,
-                alignment: Alignment.center,
-                child: Text(
-                  '¥$number',
-                  style: TextStyle(
-                      color: ColorStyle.colorPrimary,
-                      fontSize: 20.r,
-                      fontWeight: FontWeight.w600),
-                )))
+        Container(
+            color: ColorStyle.colorWhite,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 5.r),
+            child: Text(
+              '¥$number',
+              style: TextStyle(
+                  color: ColorStyle.colorPrimary,
+                  fontSize: 20.r,
+                  fontWeight: FontWeight.w600),
+            ))
       ],
     ),
   );

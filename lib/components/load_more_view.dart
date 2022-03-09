@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+//列表底部加载状态组件
 class LoadMoreView extends StatelessWidget {
-  final isLoad;
+  final bool isLoad;
   LoadMoreView(this.isLoad);
 
   @override

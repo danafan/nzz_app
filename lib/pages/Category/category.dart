@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 import 'package:nzz/components/app_bar.dart';
-import 'package:nzz/components/bannerList/banner_list_view.dart';
-import 'package:nzz/components/listLoadEmpty/list_load_empty_view.dart';
-import 'package:nzz/components/sortWidget/sort_widget_view.dart';
+import 'package:nzz/components/banner_list_view.dart';
+import 'package:nzz/components/list_load_empty.dart';
+import 'package:nzz/components/sort_widget_view.dart';
 import 'package:nzz/controllers/category_controller.dart';
 import 'package:nzz/pages/Category/components/cateToogle/cate_position_view.dart';
 import 'package:nzz/pages/Category/components/cateToogle/cate_toogle_view.dart';
 import 'package:nzz/pages/Category/components/cate_goods_list.dart';
-import 'package:nzz/pages/Category/components/leftCategory/left_category_view.dart';
+import 'package:nzz/pages/Category/components/left_category_view.dart';
 
 class CateGory extends StatelessWidget {
   //分类controller
@@ -49,15 +49,23 @@ class CateGory extends StatelessWidget {
                                     //可滑动分类
                                     CateToogleView(),
                                     //排序条件
-                                    SortWidget(),
+                                    SortWidget(
+                                        categoryController
+                                            .currentSortIndex.value,
+                                        categoryController.sortList,
+                                        categoryController.changeSort),
                                     // 商品列表
                                     Expanded(
-                                        child: categoryController.loadNum.toInt() == 0
+                                        child: categoryController.loadNum
+                                                    .toInt() ==
+                                                0
                                             ? ListLoadEmptyView(false)
-                                            : categoryController.loadNum.toInt() == 1 &&
+                                            : categoryController.loadNum
+                                                            .toInt() ==
+                                                        1 &&
                                                     categoryController
                                                         .goodsList.isEmpty
-                                                ? ListLoadEmptyView(true)
+                                                ? ListLoadEmptyView(true,'暂无商品')
                                                 : CateGoodsList()),
                                   ]),
                                   // 分类遮罩

@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nzz/controllers/index_controller.dart';
-import 'package:nzz/pages/Index/components/scrollBar/scroll_bar_controller.dart';
 import 'package:nzz/basic.dart';
 
 class ScrollBarView extends StatelessWidget {
   //首页数据Controller
   final IndexController indexController = Get.find<IndexController>();
-  //当前组件Controller
-  final ScrollBarController scrollBarController =
-      Get.put(ScrollBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +35,23 @@ class ScrollBarView extends StatelessWidget {
                             children: <Widget>[
                               Text(indexController.scrollList[index].cateName,
                                   style: TextStyle(
-                                      color: scrollBarController
+                                      color: indexController
                                                   .currentIndex.value ==
                                               index
                                           ? ColorStyle.colorPrimary
                                           : ColorStyle.colorText,
-                                      fontWeight: scrollBarController
+                                      fontWeight: indexController
                                                   .currentIndex.value ==
                                               index
                                           ? FontWeight.w600
                                           : FontWeight.w500,
-                                      fontSize: scrollBarController
+                                      fontSize: indexController
                                                   .currentIndex.value ==
                                               index
                                           ? 42.r
                                           : 32.r)),
                               SizedBox(height: 3.r),
-                              scrollBarController.currentIndex.value == index
+                              indexController.currentIndex.value == index
                                   ? Container(
                                       alignment: Alignment.center,
                                       height: 30.r,
@@ -81,8 +77,8 @@ class ScrollBarView extends StatelessWidget {
                           )),
                     ),
                     onTap: () {
-                      scrollBarController.changeCurrentIndex(
-                          index, indexController.scrollList[index].id);
+                      indexController.changeCurrentIndex(
+                          index);
                     },
                   )
                 ],

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:nzz/basic.dart';
 
+
+// appbar
 class AppBarWidget extends StatelessWidget {
   final String type; //类型（1:普通箭头加标题；2:只一个搜索框）
   final String placeholder; //搜索框默认提示

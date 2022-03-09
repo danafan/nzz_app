@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nzz/components/zf_tag_widget.dart';
 import 'package:nzz/basic.dart';
 
+// 商品grid列表item组件
 class GoodsItemGridView extends StatelessWidget {
   //每一个 商品
   final goodsItem;
@@ -76,11 +77,11 @@ class GoodsItemGridView extends StatelessWidget {
                       Offstage(
                           offstage: goodsItem.type == 2,
                           child:
-                              ZfTagWidget('自购省', ColorStyle.colorPrimary, goodsItem.selfBuyMoney.toStringAsFixed(1))),
+                              ZfTagWidget('自购省', ColorStyle.colorPrimary, goodsItem.selfBuyMoney.toDouble().toStringAsFixed(1))),
                       Offstage(
                           offstage: goodsItem.type == 2,
                           child: SizedBox(width: 10.r)),
-                      ZfTagWidget('分享赚', Color(0xffff5232), goodsItem.shareBuyMoney.toStringAsFixed(1)),
+                      ZfTagWidget('分享赚', Color(0xffff5232), goodsItem.shareBuyMoney.toDouble().toStringAsFixed(1)),
                     ],
                   )
                 ]),

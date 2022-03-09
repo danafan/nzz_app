@@ -5,9 +5,9 @@ import 'package:nzz/basic.dart';
 
 //自购省、分享赚标签组件
 class ZfTagWidget extends StatelessWidget {
-  final labelText; //名称
-  final bgColor; //背景色
-  final number; //数字
+  final String labelText; //名称
+  final Color bgColor; //背景色
+  final String number; //数字
   ZfTagWidget(this.labelText, this.bgColor, this.number);
 
   @override
