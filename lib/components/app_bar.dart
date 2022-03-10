@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:nzz/basic.dart';
 
@@ -53,8 +53,11 @@ Widget checkAppBar(type, placeholder, title, isPrimary, inputBackDark) {
     _appbar = AppBarB(placeholder: placeholder, inputBackDark: inputBackDark);
   } else if (type == 'c') {
     //箭头、标题、搜索框（首页几个分类页面使用）
-    _appbar =
-        AppBarC(title: title, placeholder: placeholder, isPrimary: isPrimary,inputBackDark: inputBackDark);
+    _appbar = AppBarC(
+        title: title,
+        placeholder: placeholder,
+        isPrimary: isPrimary,
+        inputBackDark: inputBackDark);
   }
   return _appbar;
 }
@@ -69,11 +72,11 @@ class AppBarA extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Container(
-            width: 94.r,
-            child: Icon(Icons.arrow_back_ios,
-                color:
-                    isPrimary ? ColorStyle.colorWhite : ColorStyle.colorTitle)),
+        GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(width: 74.r, child: backIcon(isPrimary))),
         Expanded(
             child: Center(
           child: Text(
@@ -87,7 +90,7 @@ class AppBarA extends StatelessWidget {
           ),
         )),
         Container(
-          width: 94.r,
+          width: 74.r,
         ),
       ],
     );
@@ -102,23 +105,12 @@ class AppBarB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.only(left: 20.r),
-        decoration: BoxDecoration(
-            color: inputBackDark ? Color(0xfff8f8f8) : ColorStyle.colorWhite,
-            borderRadius: BorderRadius.all(Radius.circular(32.r))),
-        width: 710.r,
-        height: 64.r,
-        child: Row(
-          children: <Widget>[
-            Image.asset('images/appbar_search_icon.png',
-                width: 28.r, height: 28.r),
-            SizedBox(width: 6.r),
-            Text(placeholder,
-                style: TextStyle(color: Color(0xff999999), fontSize: 28.sp))
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.r),
+      child: Row(
+        children: <Widget>[
+          Expanded(child: inputWidget(inputBackDark, placeholder))
+        ],
       ),
     );
   }
@@ -130,40 +122,64 @@ class AppBarC extends StatelessWidget {
   final String placeholder; //搜索框默认提示
   final bool isPrimary; //搜索框背景色是否是深色
   final bool inputBackDark; //搜索框背景色是否是深色
-  AppBarC({this.title = '', this.placeholder = '', this.isPrimary = false,this.inputBackDark = false});
+  AppBarC(
+      {this.title = '',
+      this.placeholder = '',
+      this.isPrimary = false,
+      this.inputBackDark = false});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:EdgeInsets.symmetric(horizontal: 20.r),
-      child:Row(
-      children: <Widget>[
-        Container(
-            child: Icon(Icons.arrow_back_ios,
-                color:
-                    isPrimary ? ColorStyle.colorWhite : ColorStyle.colorTitle)),
-        Text(title,style: TextStyle(color:ColorStyle.colorTitle,fontSize: 40.r,fontWeight:FontWeight.bold)),
-        SizedBox(width: 15.r),
-        Expanded(
-            child: Container(
-            padding: EdgeInsets.only(left: 20.r),
-            decoration: BoxDecoration(
-                color:
-                    inputBackDark ? Color(0xfff8f8f8) : ColorStyle.colorWhite,
-                borderRadius: BorderRadius.all(Radius.circular(8.r))),
-            height: 64.r,
-            child: Row(
-              children: <Widget>[
-                Image.asset('images/appbar_search_icon.png',
-                    width: 28.r, height: 28.r),
-                SizedBox(width: 6.r),
-                Text(placeholder,
-                    style: TextStyle(color: Color(0xff999999), fontSize: 28.sp))
-              ],
+        padding: EdgeInsets.only(right: 20.r),
+        child: Row(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(left: 20.r, right: 15.r),
+                  child: backIcon(isPrimary)),
             ),
-          ),
-        ),
-      ],
-    ));
+            Text(title,
+                style: TextStyle(
+                    color: ColorStyle.colorTitle,
+                    fontSize: 40.r,
+                    fontWeight: FontWeight.bold)),
+            SizedBox(width: 15.r),
+            Expanded(
+              child: inputWidget(inputBackDark, placeholder, false),
+            ),
+          ],
+        ));
   }
+}
+
+//左侧箭头
+Widget backIcon(isPrimary) {
+  return Image.asset(
+      isPrimary ? 'images/back_icon_light.png' : 'images/back_icon_dark.png',
+      width: 34.r,
+      height: 34.r);
+}
+
+//输入框
+Widget inputWidget(inputBackDark, placeholder, [defaultCircular = true]) {
+  return Container(
+    padding: EdgeInsets.only(left: 20.r),
+    decoration: BoxDecoration(
+        color: inputBackDark ? Color(0xfff8f8f8) : ColorStyle.colorWhite,
+        borderRadius:
+            BorderRadius.all(Radius.circular(defaultCircular ? 32.r : 8.r))),
+    height: 64.r,
+    child: Row(
+      children: <Widget>[
+        Image.asset('images/appbar_search_icon.png', width: 28.r, height: 28.r),
+        SizedBox(width: 6.r),
+        Text(placeholder,
+            style: TextStyle(color: Color(0xff999999), fontSize: 28.sp))
+      ],
+    ),
+  );
 }

@@ -25,6 +25,8 @@ flutter:
   uses-material-design: true
   assets:
     - images/appbar_search_icon.png
+    - images/back_icon_light.png
+    - images/back_icon_dark.png
     - images/focus_icon.png
     - images/quality_icon.png
     - images/money_icon.png
