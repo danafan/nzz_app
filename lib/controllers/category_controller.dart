@@ -19,7 +19,7 @@ class CategoryController extends GetxController {
    //左侧当前选中标题
   final leftCurrentTitle = ''.obs;
   //右侧是否展开选项
-  final isOpen = 0.obs;
+  final isOpen = false.obs;
   //右侧子分类列表
   final rightCateList = [].obs;
   //右侧当前选中下标
@@ -105,10 +105,6 @@ class CategoryController extends GetxController {
     rightCateList.value = leftCateList[i].children;
     //切换sid
     sid = leftCateList[i].children[0].id;
-    //请求次数清0
-    loadNum.value = 0;
-    //清空列表
-    goodsList.clear();
     //切换排序条件
     changeSort(0);
   }
@@ -120,14 +116,10 @@ class CategoryController extends GetxController {
 
   //切换右侧当前选中下标
   void changeRightCurrentIndex(i) {
-    //切换左侧当前选中下标
+    //切换右侧当前选中下标
     rightCurrentIndex.value = i;
     //切换sid
     sid = rightCateList[i].id;
-    //请求次数清0
-    loadNum.value = 0;
-    //清空列表
-    goodsList.clear();
     //切换排序条件
     changeSort(0);
   }
@@ -188,6 +180,8 @@ class CategoryController extends GetxController {
     }
     //请求次数清0
     loadNum.value = 0;
+    //页码置1
+    page = 1;
     //清空列表
     goodsList.clear();
     //获取商品列表
@@ -200,7 +194,7 @@ class CategoryController extends GetxController {
       "goodType": "13",
       "homeOrder": sortList[0]['sort'],
       "limit": 8,
-      "page": 1,
+      "page": page,
       "pid": pid,
       "priceOrder": sortList[2]['sort'],
       "salesOrder": sortList[1]['sort'],

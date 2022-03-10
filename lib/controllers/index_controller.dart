@@ -24,7 +24,6 @@ class IndexController extends GetxController {
   void changeCurrentIndex(i){
     currentIndex.value = i;
     pid = scrollList[i].id;
-    loadNum.value = 0;
      //下拉刷新
     refreshGoodsList();
   }
@@ -80,6 +79,7 @@ class IndexController extends GetxController {
   //下拉刷新
   void refreshGoodsList() {
     page = 1;
+    loadNum.value = 0;
     goodsList.clear();
     //获取商品列表
     getGoodsList();

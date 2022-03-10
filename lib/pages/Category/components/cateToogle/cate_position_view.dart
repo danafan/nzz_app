@@ -31,7 +31,7 @@ class CatePositionView extends StatelessWidget {
                               fontWeight: FontWeight.w600))))),
               GestureDetector(
                   onTap: () {
-                    categoryController.changeOpenStatus(0);
+                    categoryController.changeOpenStatus(false);
                   },
                   child: Container(
                       alignment: Alignment.center,
@@ -66,7 +66,7 @@ class CatePositionView extends StatelessWidget {
                         onTap: () {
                           //切换选项
                           categoryController.changeRightCurrentIndex(index);
-                          categoryController.changeOpenStatus(0);
+                          categoryController.changeOpenStatus(false);
                         },
                         child: Container(
                             width: 185.r,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nzz/basic.dart';
 
 class CateGory extends StatelessWidget {
@@ -9,7 +10,11 @@ class CateGory extends StatelessWidget {
       color: ColorStyle.colorWhite,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <
           Widget>[
-        Container(
+        GestureDetector(
+          onTap:(){
+            Get.toNamed("/food_page_view");
+          },
+          child:Container(
             width: 187.5.r,
             alignment: Alignment.center,
             child: Column(children: <Widget>[
@@ -19,7 +24,7 @@ class CateGory extends StatelessWidget {
               Text('同城',
                   style:
                       TextStyle(color: ColorStyle.colorTitle, fontSize: 24.r))
-            ])),
+            ]))),
         Container(
             width: 187.5.r,
             alignment: Alignment.center,

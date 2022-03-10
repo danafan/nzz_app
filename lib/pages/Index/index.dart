@@ -30,7 +30,7 @@ class Index extends StatelessWidget {
         body: Column(
           children: <Widget>[
             AppBarWidget(
-              type: '2',
+              type: 'b',
               placeholder: '搜索商品',
               inputBackDark: true,
               isPrimary: false,

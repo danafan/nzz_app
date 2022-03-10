@@ -4,28 +4,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:nzz/basic.dart';
 
-
 // appbar
 class AppBarWidget extends StatelessWidget {
-  final String type; //类型（1:普通箭头加标题；2:只一个搜索框）
+  final String type; //类型（a:普通箭头加标题；b:只一个搜索框）
   final String placeholder; //搜索框默认提示
   final String title; //标题
   final bool isPrimary; //背景色是否是主题色
   final bool inputBackDark; //搜索框背景色是否是深色
-  AppBarWidget(
-      {this.type = '1',
-      this.placeholder = '',
-      this.title = '',
-      this.isPrimary = true,
-      this.inputBackDark = false,
-
-      });
+  AppBarWidget({
+    this.type = 'a',
+    this.placeholder = '',
+    this.title = '',
+    this.isPrimary = true,
+    this.inputBackDark = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     //设置状态栏颜色
-    SystemChrome.setSystemUIOverlayStyle(
-        isPrimary ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark);
+    // SystemChrome.setSystemUIOverlayStyle(
+    //     isPrimary ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -35,17 +33,30 @@ class AppBarWidget extends StatelessWidget {
           height: MediaQuery.of(context).padding.top,
         ),
         Container(
-          color: isPrimary ? ColorStyle.colorPrimary : ColorStyle.colorWhite,
-          height: 88.r,
-          child:
-              // 普通箭头加标题
-              // AppBarA(title: title, isPrimary: isPrimary),
-              // 只一个搜索框
-              AppBarB(placeholder: placeholder, inputBackDark: inputBackDark),
-        ),
+            color: isPrimary ? ColorStyle.colorPrimary : ColorStyle.colorWhite,
+            height: 88.r,
+            child: checkAppBar(
+                type, placeholder, title, isPrimary, inputBackDark)),
       ],
     );
   }
+}
+
+//判断显示哪个appbar
+Widget checkAppBar(type, placeholder, title, isPrimary, inputBackDark) {
+  Widget _appbar = SizedBox();
+  if (type == 'a') {
+    //普通箭头加标题
+    _appbar = AppBarA(title: title, isPrimary: isPrimary);
+  } else if (type == 'b') {
+    //只一个搜索框
+    _appbar = AppBarB(placeholder: placeholder, inputBackDark: inputBackDark);
+  } else if (type == 'c') {
+    //箭头、标题、搜索框（首页几个分类页面使用）
+    _appbar =
+        AppBarC(title: title, placeholder: placeholder, isPrimary: isPrimary,inputBackDark: inputBackDark);
+  }
+  return _appbar;
 }
 
 //普通箭头加标题
@@ -63,12 +74,6 @@ class AppBarA extends StatelessWidget {
             child: Icon(Icons.arrow_back_ios,
                 color:
                     isPrimary ? ColorStyle.colorWhite : ColorStyle.colorTitle)),
-        // Image(
-        //   width: 34.r,
-        //   height: 34.r,
-        //   image: NetworkImage(
-        //       Domain.domain + 'with_city_left_arrow.png'),
-        // )
         Expanded(
             child: Center(
           child: Text(
@@ -99,7 +104,7 @@ class AppBarB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding:EdgeInsets.only(left:20.r),
+        padding: EdgeInsets.only(left: 20.r),
         decoration: BoxDecoration(
             color: inputBackDark ? Color(0xfff8f8f8) : ColorStyle.colorWhite,
             borderRadius: BorderRadius.all(Radius.circular(32.r))),
@@ -107,12 +112,58 @@ class AppBarB extends StatelessWidget {
         height: 64.r,
         child: Row(
           children: <Widget>[
-            Image.asset('images/appbar_search_icon.png',width: 28.r,height: 28.r),
+            Image.asset('images/appbar_search_icon.png',
+                width: 28.r, height: 28.r),
             SizedBox(width: 6.r),
-            Text(placeholder, style: TextStyle(color: Color(0xff999999),fontSize:28.sp))
+            Text(placeholder,
+                style: TextStyle(color: Color(0xff999999), fontSize: 28.sp))
           ],
         ),
       ),
     );
+  }
+}
+
+//箭头、标题、搜索框（首页几个分类页面使用）
+class AppBarC extends StatelessWidget {
+  final String title; //标题
+  final String placeholder; //搜索框默认提示
+  final bool isPrimary; //搜索框背景色是否是深色
+  final bool inputBackDark; //搜索框背景色是否是深色
+  AppBarC({this.title = '', this.placeholder = '', this.isPrimary = false,this.inputBackDark = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:EdgeInsets.symmetric(horizontal: 20.r),
+      child:Row(
+      children: <Widget>[
+        Container(
+            child: Icon(Icons.arrow_back_ios,
+                color:
+                    isPrimary ? ColorStyle.colorWhite : ColorStyle.colorTitle)),
+        Text(title,style: TextStyle(color:ColorStyle.colorTitle,fontSize: 40.r,fontWeight:FontWeight.bold)),
+        SizedBox(width: 15.r),
+        Expanded(
+            child: Container(
+            padding: EdgeInsets.only(left: 20.r),
+            decoration: BoxDecoration(
+                color:
+                    inputBackDark ? Color(0xfff8f8f8) : ColorStyle.colorWhite,
+                borderRadius: BorderRadius.all(Radius.circular(8.r))),
+            height: 64.r,
+            child: Row(
+              children: <Widget>[
+                Image.asset('images/appbar_search_icon.png',
+                    width: 28.r, height: 28.r),
+                SizedBox(width: 6.r),
+                Text(placeholder,
+                    style: TextStyle(color: Color(0xff999999), fontSize: 28.sp))
+              ],
+            ),
+          ),
+        ),
+      ],
+    ));
   }
 }

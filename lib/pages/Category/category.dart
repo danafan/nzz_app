@@ -21,7 +21,7 @@ class CateGory extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: <Widget>[
-        AppBarWidget(type: '2', placeholder: '搜索商品'),
+        AppBarWidget(type: 'b', placeholder: '搜索商品'),
         Expanded(
             child: Row(
           children: <Widget>[
@@ -41,8 +41,7 @@ class CateGory extends StatelessWidget {
                             showPagination: true),
                       ),
                       Expanded(
-                          child: Obx(() => IndexedStack(
-                                index: categoryController.isOpen.value,
+                          child: Obx(() => Stack(
                                 children: <Widget>[
                                   // 筛选条件和列表
                                   Column(children: <Widget>[
@@ -65,11 +64,17 @@ class CateGory extends StatelessWidget {
                                                         1 &&
                                                     categoryController
                                                         .goodsList.isEmpty
-                                                ? ListLoadEmptyView(true,'暂无商品')
+                                                ? ListLoadEmptyView(
+                                                    true, '暂无商品')
                                                 : CateGoodsList()),
                                   ]),
                                   // 分类遮罩
-                                  Positioned(child: CatePositionView())
+                                  Positioned(
+                                      child: Offstage(
+                                          offstage:
+                                              categoryController.isOpen.value ==
+                                                  false,
+                                          child: CatePositionView()))
                                 ],
                               )))
                     ])))

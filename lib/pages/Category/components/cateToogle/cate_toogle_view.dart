@@ -56,7 +56,7 @@ class CateToogleView extends StatelessWidget {
                       ))),
               GestureDetector(
                   onTap: () {
-                    categoryController.changeOpenStatus(1);
+                    categoryController.changeOpenStatus(true);
                   },
                   child: Container(
                     decoration: BoxDecoration(boxShadow: [

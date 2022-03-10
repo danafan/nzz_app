@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import 'routes/app_pages.dart';
+import 'routes/index.dart';
 import 'basic.dart';
 
 void main() => runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: () => GetMaterialApp(
           title: "Application",
-          initialRoute: AppPages.INITIAL,
+          initialRoute: AppPages.initialPage,
           getPages: AppPages.routes,
           theme: ThemeData(primaryColor: ColorStyle.colorPrimary)),
     );
