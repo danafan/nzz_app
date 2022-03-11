@@ -1,5 +1,5 @@
 //接口前缀
-const env = cnBaseUrl;
+const env = qaBaseUrl;
 
 //测试
 const qaBaseUrl = "https://pre-api.zhuanzhuanyanxuan.com/api/";

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:nzz/models/food_store_list_model.dart';
 import 'package:nzz/models/goods_category_model.dart';
 import 'package:nzz/models/goods_list_model.dart';
 import 'package:nzz/models/qrqm_store_model.dart';
@@ -59,5 +60,16 @@ class GoodsAPI {
   static Future getQrqmStoreList() async {
     var response = await Request().get('getAdStores');
     return QrqmStoreModel.fromJson(response);
+  }
+
+  //同城美食店铺列表
+  static Future getFoodStoreList({
+    required Map<String, dynamic> params,
+  }) async {
+    var response = await Request().get(
+      'store/getStoreList',
+      params: params,
+    );
+    return FoodStoreListModel.fromJson(response);
   }
 }

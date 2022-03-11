@@ -12,7 +12,7 @@ import 'package:nzz/pages/navBar/views/nav_bar_view.dart';
 class AppPages {
   AppPages._();
 
-  static const initialPage = '/nav-bar';
+  static const initialPage = '/nav_bar';
 
   static final routes = [
     GetPage(name: '/index', page: () => Index()),
@@ -22,7 +22,7 @@ class AppPages {
     GetPage(name: '/shopcar', page: () => ShopCar()),
     GetPage(name: '/mine', page: () => Mine()),
     GetPage(
-      name: '/nav-bar',
+      name: '/nav_bar',
       page: () => NavBarView(),
       binding: NavBarBinding(),
     )
