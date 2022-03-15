@@ -4,11 +4,11 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:nzz/components/grade_star_view.dart';
 import 'package:nzz/basic.dart';
+import 'package:nzz/components/vou_pre_widget.dart';
 import 'package:nzz/controllers/index_controller.dart';
 import 'package:nzz/models/qrqm_store_model.dart';
 
 class QrqmStoreView extends StatelessWidget {
-
   //首页数据controller
   final IndexController indexController = Get.put(IndexController());
 
@@ -53,8 +53,7 @@ class QrqmStoreView extends StatelessWidget {
                                             children: <Widget>[
                                       // 店铺名称
                                       Text(
-                                          indexController
-                                              .storeList[index].name,
+                                          indexController.storeList[index].name,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -144,42 +143,8 @@ Widget preWidget(productVos) {
   List<ProductVo> productList = productVos;
   List<Widget> widgetList = [];
   for (int i = 0; i < productList.length; i++) {
-    widgetList.add(Container(
-        margin: EdgeInsets.only(top: 10.r),
-        child: Row(
-          children: <Widget>[
-            Image.asset(
-                productList[i].type == 4
-                    ? 'images/quan_icon.png'
-                    : 'images/hui_icon.png',
-                width: 35.r,
-                height: 33.r),
-            SizedBox(width: 20.r),
-            Expanded(child: LayoutBuilder(builder: (context, viewport) {
-              var dd = productList[i].type == 4 ? 130.r : 20.r;
-              var maxWidth = viewport.maxWidth - dd;
-              return Row(
-                children: <Widget>[
-                  Container(
-                    constraints: BoxConstraints(maxWidth: maxWidth),
-                    child: Text(
-                      productList[i].name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: ColorStyle.colorTitle, fontSize: 24.r),
-                    ),
-                  ),
-                  SizedBox(width: 20.r),
-                  Offstage(
-                      offstage: productList[i].type != 4,
-                      child: Image.asset('images/xkzx_icon.png',
-                          width: 110.r, height: 32.r))
-                ],
-              );
-            })),
-          ],
-        )));
+    widgetList.add(VouPreWidget(productList[i].type == 4 ? '1' : '2',
+        productList[i].name, productList[i].type != 4));
   }
   return Container(
       height: 86.r,

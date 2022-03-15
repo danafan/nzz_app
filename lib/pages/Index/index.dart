@@ -84,11 +84,11 @@ class Index extends StatelessWidget {
                       child: SizedBox(height: 20.r),
                     ),
                     // 千人千面（美食）
-                    SliverToBoxAdapter(
+                    Obx(() => SliverToBoxAdapter(
                         child: Offstage(
                             offstage:
                                 indexController.storeList.length.toInt() == 0,
-                            child: QrqmStoreView())),
+                            child: QrqmStoreView()))),
                     //可吸顶
                     SliverPersistentHeader(
                       pinned: true,

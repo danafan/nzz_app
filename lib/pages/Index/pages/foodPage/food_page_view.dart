@@ -8,6 +8,7 @@ import 'package:nzz/components/list_load_empty.dart';
 import 'package:nzz/components/load_more_view.dart';
 import 'package:nzz/components/sliver_app_bar_delegate.dart';
 import 'package:nzz/pages/Index/pages/foodPage/components/food_store_item.dart';
+import 'package:nzz/pages/Index/pages/foodPage/components/position_sort_widget.dart';
 import 'package:nzz/pages/Index/pages/foodPage/food_page_controller.dart';
 
 class FoodPageView extends StatelessWidget {
@@ -54,9 +55,9 @@ class FoodPageView extends StatelessWidget {
                     pinned: true,
                     floating: true,
                     delegate: SliverAppBarDelegate(
-                      minHeight: 150.r,
-                      maxHeight: 150.r,
-                      child: Text('asd'),
+                      minHeight: 68.r,
+                      maxHeight: 68.r,
+                      child: PositionSortWidget(),
                     ),
                   ),
                   // 店铺列表

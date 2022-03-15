@@ -88,7 +88,8 @@ class IndexController extends GetxController {
   //千人千面列表
   void getQrqmStoreList() {
     GoodsAPI.getQrqmStoreList().then((res) => {
-      storeList.value = res.data.adStores,
+      storeList.addAll(res.data.adStores),
+      print(storeList.length)
     });
   }
 

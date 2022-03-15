@@ -4,7 +4,7 @@ import 'package:nzz/basic.dart';
 
 class DiscountWidget extends StatelessWidget {
 
-  final double discount;
+  final String discount;
   DiscountWidget(this.discount);
 
   @override
@@ -15,7 +15,7 @@ class DiscountWidget extends StatelessWidget {
           color: ColorStyle.colorPrimary,
           borderRadius: BorderRadius.circular(4.r)),
       child: Text(
-        '${discount.toString()}折',
+        '$discount折',
         style: TextStyle(color: ColorStyle.colorWhite, fontSize: 18.r),
       ),
     );

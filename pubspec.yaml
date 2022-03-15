@@ -48,6 +48,8 @@ flutter:
     - images/sort_default.png
     - images/sort_up.png
     - images/sort_down.png
+    - images/food_sort_down.png
+    - images/food_sort_up.png
     
     
 

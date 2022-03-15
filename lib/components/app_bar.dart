@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:nzz/basic.dart';
+import 'package:nzz/pages/Index/pages/foodPage/food_page_controller.dart';
 
 // appbar
 class AppBarWidget extends StatelessWidget {
@@ -19,25 +20,32 @@ class AppBarWidget extends StatelessWidget {
     this.inputBackDark = false,
   });
 
+   //同城美食controller
+  final FoodPageController foodPageController = Get.find<FoodPageController>();
+
   @override
   Widget build(BuildContext context) {
     //设置状态栏颜色
     // SystemChrome.setSystemUIOverlayStyle(
     //     isPrimary ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        // 状态栏
-        Container(
-          color: isPrimary ? ColorStyle.colorPrimary : ColorStyle.colorWhite,
-          height: MediaQuery.of(context).padding.top,
-        ),
-        Container(
+    return Container(
+      key: foodPageController.appbarKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // 状态栏
+          Container(
             color: isPrimary ? ColorStyle.colorPrimary : ColorStyle.colorWhite,
-            height: 88.r,
-            child: checkAppBar(
-                type, placeholder, title, isPrimary, inputBackDark)),
-      ],
+            height: MediaQuery.of(context).padding.top,
+          ),
+          Container(
+              color:
+                  isPrimary ? ColorStyle.colorPrimary : ColorStyle.colorWhite,
+              height: 88.r,
+              child: checkAppBar(
+                  type, placeholder, title, isPrimary, inputBackDark)),
+        ],
+      ),
     );
   }
 }

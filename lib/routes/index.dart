@@ -12,7 +12,7 @@ import 'package:nzz/pages/navBar/views/nav_bar_view.dart';
 class AppPages {
   AppPages._();
 
-  static const initialPage = '/nav_bar';
+  static const initialPage = '/food_page_view';
 
   static final routes = [
     GetPage(name: '/index', page: () => Index()),
