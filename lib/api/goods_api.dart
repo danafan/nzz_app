@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:nzz/models/food_store_list_model.dart';
+import 'package:nzz/models/food_type_list_model.dart';
 import 'package:nzz/models/goods_category_model.dart';
 import 'package:nzz/models/goods_list_model.dart';
 import 'package:nzz/models/qrqm_store_model.dart';
@@ -71,5 +72,25 @@ class GoodsAPI {
       params: params,
     );
     return FoodStoreListModel.fromJson(response);
+  }
+
+  //同城美食类型列表（筛选条件）
+  static Future getFoodTypeList({
+    required Map<String, dynamic> params,
+  }) async {
+    var response = await Request().get(
+      'dictDetail',
+      params:params,
+    );
+    Map<String, dynamic> typeItem = {
+                "createTime": 1635995944000,
+                "dictId":11,
+                "id":31,
+                "label":"全部美食",
+                "sort":1,
+                "value":"全部美食"
+            };
+    response['data']['content'].insert(0, typeItem);
+    return FoodTypeListModel.fromJson(response);
   }
 }

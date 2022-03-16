@@ -20,16 +20,52 @@ class PositionSortWidget extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
                 onTap: () {
-                  if(foodPageController.dy > foodPageController.scrollTop){
-                     foodPageController.listController.jumpTo(foodPageController.dy);
-                  }
+                  foodPageController.openSortModel(1);
+                },
+                child: Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Obx(() => Text(
+                            foodPageController.foodTypeList.isNotEmpty
+                                ? foodPageController
+                                    .foodTypeList[foodPageController
+                                        .checkFoodTypeIndex
+                                        .toInt()]
+                                    .value
+                                : '',
+                            style: TextStyle(
+                                color: foodPageController
+                                            .checkFoodTypeIndex.value >
+                                        0
+                                    ? ColorStyle.colorPrimary
+                                    : ColorStyle.colorTitle,
+                                fontWeight: foodPageController
+                                            .checkFoodTypeIndex.value >
+                                        0
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                                fontSize: 24.r),
+                          )),
+                      SizedBox(width: 6.r),
+                      Obx(() => Image.asset(
+                            foodPageController.foodSortIcon.value,
+                            width: 13.53.r,
+                            height: 11.87.r,
+                          ))
+                    ],
+                  ),
+                )),
+            GestureDetector(
+                onTap: () {
+                  foodPageController.openSortModel(2);
                 },
                 child: Container(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '美食类型',
+                        '智能排序',
                         style: TextStyle(
                             color: ColorStyle.colorTitle, fontSize: 24.r),
                       ),
@@ -42,42 +78,28 @@ class PositionSortWidget extends StatelessWidget {
                     ],
                   ),
                 )),
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '智能排序',
-                    style:
-                        TextStyle(color: ColorStyle.colorTitle, fontSize: 24.r),
+            GestureDetector(
+                onTap: () {
+                  foodPageController.openSortModel(3);
+                },
+                child: Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        '筛选',
+                        style: TextStyle(
+                            color: ColorStyle.colorTitle, fontSize: 24.r),
+                      ),
+                      SizedBox(width: 6.r),
+                      Image.asset(
+                        'images/food_sort_down.png',
+                        width: 13.53.r,
+                        height: 11.87.r,
+                      )
+                    ],
                   ),
-                  SizedBox(width: 6.r),
-                  Image.asset(
-                    'images/food_sort_down.png',
-                    width: 13.53.r,
-                    height: 11.87.r,
-                  )
-                ],
-              ),
-            ),
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '筛选',
-                    style:
-                        TextStyle(color: ColorStyle.colorTitle, fontSize: 24.r),
-                  ),
-                  SizedBox(width: 6.r),
-                  Image.asset(
-                    'images/food_sort_down.png',
-                    width: 13.53.r,
-                    height: 11.87.r,
-                  )
-                ],
-              ),
-            )
+                ))
           ],
         ));
   }
