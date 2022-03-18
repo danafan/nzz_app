@@ -18,6 +18,7 @@ class PositionSortWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            //美食类型
             GestureDetector(
                 onTap: () {
                   foodPageController.openSortModel(1);
@@ -56,6 +57,7 @@ class PositionSortWidget extends StatelessWidget {
                     ],
                   ),
                 )),
+            //智能排序
             GestureDetector(
                 onTap: () {
                   foodPageController.openSortModel(2);
@@ -64,20 +66,35 @@ class PositionSortWidget extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        '智能排序',
-                        style: TextStyle(
-                            color: ColorStyle.colorTitle, fontSize: 24.r),
-                      ),
+                      Obx(() => Text(
+                           foodPageController
+                                    .sortList[foodPageController
+                                        .sortCurrentIndex
+                                        .toInt()]['title']
+                                    ,
+                            style: TextStyle(
+                                color: foodPageController
+                                            .sortCurrentIndex.value >
+                                        0
+                                    ? ColorStyle.colorPrimary
+                                    : ColorStyle.colorTitle,
+                                fontWeight: foodPageController
+                                            .sortCurrentIndex.value >
+                                        0
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                                fontSize: 24.r),
+                          )),
                       SizedBox(width: 6.r),
-                      Image.asset(
-                        'images/food_sort_down.png',
-                        width: 13.53.r,
-                        height: 11.87.r,
-                      )
+                      Obx(() => Image.asset(
+                            foodPageController.sortCurrentIcon.value,
+                            width: 13.53.r,
+                            height: 11.87.r,
+                          ))
                     ],
                   ),
                 )),
+            //筛选
             GestureDetector(
                 onTap: () {
                   foodPageController.openSortModel(3);

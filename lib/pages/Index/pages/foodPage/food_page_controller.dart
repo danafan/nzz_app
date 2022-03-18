@@ -88,42 +88,109 @@ class FoodPageController extends GetxController {
 
   // 是否展开筛选框
   final openModel = false.obs;
+  //点击的条件下标
+  final currentIndex = 0.obs;
+  //美食类型列表（筛选条件）
+  final foodTypeList = [].obs;
+  //美食类型选中的下标
+  final checkFoodTypeIndex = 0.obs;
   //美食类型图标
   final foodSortIcon = 'images/food_sort_down.png'.obs;
-  //弹出排序条件下拉框
+  // 智能排序列表（筛选条件）
+  List<Map> sortList = [
+    {"title": "智能排序", "sort": ""},
+    {"title": "距离优先", "sort": "distance asc"},
+    {"title": "好评优先", "sort": "star desc"},
+    {"title": "销量优先", "sort": "sale_num desc"},
+    {"title": "低价优先", "sort": "avg_price asc"},
+    {"title": "高价优先", "sort": "avg_price desc"}
+  ];
+  //智能排序选中的下标
+  final sortCurrentIndex = 0.obs;
+
+  ///智能排序图标
+  final sortCurrentIcon = 'images/food_sort_down.png'.obs;
+
+  // 筛选
+  // 价格区间列表
+  List<Map> priceList = [
+    {"name": "50以下", "pm": "beginAvgPrice=0&endAvgPrice=50"},
+    {"name": "50-100", "pm": "beginAvgPrice=50&endAvgPrice=100"},
+    {"name": "100-300", "pm": "beginAvgPrice=100&endAvgPrice=300"},
+    {"name": "300以上", "pm": "beginAvgPrice=300"}
+  ];
+  //当前选中的价格区间下标
+  final currentPriceIndex = -1.obs;
+  //营业时间列表
+  List<Map> timeList = [
+    {"name": "0-5时", "pm": "dayTimeStart=0&dayTimeEnd=5"},
+    {"name": "5-10时", "pm": "dayTimeStart=5&dayTimeEnd=10"},
+    {"name": "10-14时", "pm": "dayTimeStart=10&dayTimeEnd=14"},
+    {"name": "14-17时", "pm": "dayTimeStart=14&dayTimeEnd=17"},
+    {"name": "17-21时", "pm": "dayTimeStart=17&dayTimeEnd=21"},
+    {"name": "21-24时", "pm": "dayTimeStart=21&dayTimeEnd=24"},
+    {"name": "营业中", "pm": "isOpen=1"},
+    {"name": "24小时营业", "pm": "dayTimeStart=0&dayTimeEnd=24"},
+  ];
+  //当前选中的营业时间下标
+  final currentTimeIndex = -1.obs;
+  //特色列表
+  List<String> tagList = ["有包厢", "可停车", "宝宝椅", "Wi-Fi", "无烟区", "充电宝", "在线点餐"];
+
+  //当前选中的特色列表
+  final currentTagList = [].obs;
+
+  //点击排序条件的某一个
   void openSortModel(index) {
+    currentIndex.value = index;
     //吸顶
     if (dy > scrollTop) {
       listController.jumpTo(dy);
     }
     openModel.value = !openModel.value;
-    if (index == 1) {
-      //美食类型
-      if (openModel.value == true) {
+    //展开
+    if (openModel.value == true) {
+      if (currentIndex.value == 1) {
+        //美食
         foodSortIcon.value = 'images/food_sort_up.png';
-      } else {
-        if (checkFoodTypeIndex.value > 0) {
-          foodSortIcon.value = 'images/food_sort_up.png'; //要换成向下的红色
-        } else {
-          foodSortIcon.value = 'images/food_sort_down.png';
-        }
+      } else if (currentIndex.value == 2) {
+        //智能排序
+        sortCurrentIcon.value = 'images/food_sort_up.png';
       }
+    } else {
+      //判断所有选项的箭头展示情况
+      setArrowStatus();
     }
   }
 
-  //美食类型列表（筛选条件）
-  final foodTypeList = [].obs;
-  //美食类型选中的下标
-  final checkFoodTypeIndex = 0.obs;
-
   //切换美食类型
-  checkFoodType(index) {
+  void checkFoodType(index) {
     checkFoodTypeIndex.value = index;
+    //判断所有选项的箭头展示情况
+    setArrowStatus();
+  }
+
+  //切换智能排序
+  checkCurrentSort(index) {
+    sortCurrentIndex.value = index;
+    //判断所有选项的箭头展示情况
+    setArrowStatus();
+  }
+
+  //关闭弹窗并判断所有选项的箭头展示情况
+  void setArrowStatus() {
     openModel.value = false;
+    //美食
     if (checkFoodTypeIndex.value > 0) {
-      foodSortIcon.value = 'images/food_sort_up.png'; //要换成向下的红色
-    }else{
+      foodSortIcon.value = 'images/food_sort_up.png';
+    } else {
       foodSortIcon.value = 'images/food_sort_down.png';
+    }
+    //智能排序
+    if (sortCurrentIndex.value > 0) {
+      sortCurrentIcon.value = 'images/food_sort_up.png';
+    } else {
+      sortCurrentIcon.value = 'images/food_sort_down.png';
     }
   }
 
