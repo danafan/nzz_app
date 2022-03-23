@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nzz/api/common_api.dart';
@@ -112,16 +110,20 @@ class FoodPageController extends GetxController {
   final sortCurrentIcon = 'images/food_sort_down.png'.obs;
 
   // 筛选
+  ///筛选图标
+  final screenIcon = 'images/food_sort_down.png'.obs;
   // 价格区间列表
+
+  final currentPriceIndex = 99999.obs; //当前选中的价格区间下标
   List<Map> priceList = [
     {"name": "50以下", "pm": "beginAvgPrice=0&endAvgPrice=50"},
     {"name": "50-100", "pm": "beginAvgPrice=50&endAvgPrice=100"},
     {"name": "100-300", "pm": "beginAvgPrice=100&endAvgPrice=300"},
     {"name": "300以上", "pm": "beginAvgPrice=300"}
   ];
-  //当前选中的价格区间下标
-  final currentPriceIndex = -1.obs;
+
   //营业时间列表
+  final currentTimeIndex = 99999.obs; //当前选中的营业时间下标
   List<Map> timeList = [
     {"name": "0-5时", "pm": "dayTimeStart=0&dayTimeEnd=5"},
     {"name": "5-10时", "pm": "dayTimeStart=5&dayTimeEnd=10"},
@@ -132,22 +134,63 @@ class FoodPageController extends GetxController {
     {"name": "营业中", "pm": "isOpen=1"},
     {"name": "24小时营业", "pm": "dayTimeStart=0&dayTimeEnd=24"},
   ];
-  //当前选中的营业时间下标
-  final currentTimeIndex = -1.obs;
-  //特色列表
-  List<String> tagList = ["有包厢", "可停车", "宝宝椅", "Wi-Fi", "无烟区", "充电宝", "在线点餐"];
 
-  //当前选中的特色列表
-  final currentTagList = [].obs;
+  // 切换选中的价格或营业时间
+  void checkPriceTime(type, index) {
+    if (type == 'price') {
+      if (currentPriceIndex.value == index) {
+        currentPriceIndex.value = 99999;
+      } else {
+        currentPriceIndex.value = index;
+      }
+    } else {
+      if (currentTimeIndex.value == index) {
+        currentTimeIndex.value = 99999;
+      } else {
+        currentTimeIndex.value = index;
+      }
+    }
+  }
+
+  //特色列表
+  final currentTagList = [].obs; //当前选中的特色列表
+  List<String> tagList = ["有包厢", "可停车", "宝宝椅", "Wi-Fi", "无烟区", "充电宝", "在线点餐"];
+  //切换选中的特色
+  void checkCurrentTag(index) {
+    if (currentTagList.contains(tagList[index])) {
+      currentTagList.remove(tagList[index]);
+    } else {
+      currentTagList.add(tagList[index]);
+    }
+  }
+
+  //点击筛选的重置
+  resetScreen() {
+    currentPriceIndex.value = 99999;
+    currentTimeIndex.value = 99999;
+    currentTagList.clear();
+    //判断所有选项的箭头展示情况
+    setArrowStatus();
+     //获取店铺列表
+    getFoodStoreList();
+  }
 
   //点击排序条件的某一个
   void openSortModel(index) {
-    currentIndex.value = index;
     //吸顶
     if (dy > scrollTop) {
       listController.jumpTo(dy);
     }
-    openModel.value = !openModel.value;
+    if(currentIndex.value == index){
+      openModel.value = false;
+      currentIndex.value = 99999;
+    }else{
+       openModel.value = true;
+       currentIndex.value = index;
+    }
+    
+    
+    //判断所有选项的箭头展示情况
     //展开
     if (openModel.value == true) {
       if (currentIndex.value == 1) {
@@ -156,6 +199,9 @@ class FoodPageController extends GetxController {
       } else if (currentIndex.value == 2) {
         //智能排序
         sortCurrentIcon.value = 'images/food_sort_up.png';
+      }else if (currentIndex.value == 3) {
+        //筛选
+        screenIcon.value = 'images/food_sort_up.png';
       }
     } else {
       //判断所有选项的箭头展示情况
@@ -168,18 +214,23 @@ class FoodPageController extends GetxController {
     checkFoodTypeIndex.value = index;
     //判断所有选项的箭头展示情况
     setArrowStatus();
+     //获取店铺列表
+    getFoodStoreList();
   }
 
   //切换智能排序
-  checkCurrentSort(index) {
+  void checkCurrentSort(index) {
     sortCurrentIndex.value = index;
     //判断所有选项的箭头展示情况
     setArrowStatus();
+     //获取店铺列表
+    getFoodStoreList();
   }
 
   //关闭弹窗并判断所有选项的箭头展示情况
   void setArrowStatus() {
     openModel.value = false;
+    currentIndex.value = 99999;
     //美食
     if (checkFoodTypeIndex.value > 0) {
       foodSortIcon.value = 'images/food_sort_up.png';
@@ -191,6 +242,14 @@ class FoodPageController extends GetxController {
       sortCurrentIcon.value = 'images/food_sort_up.png';
     } else {
       sortCurrentIcon.value = 'images/food_sort_down.png';
+    }
+    // 筛选
+    if (currentPriceIndex.value <= priceList.length - 1 ||
+        currentTimeIndex.value <= timeList.length - 1 ||
+        currentTagList.isNotEmpty) {
+      screenIcon.value = 'images/food_sort_up.png';
+    } else {
+      screenIcon.value = 'images/food_sort_down.png';
     }
   }
 
@@ -204,7 +263,51 @@ class FoodPageController extends GetxController {
 
   //获取店铺列表
   void getFoodStoreList() {
-    Map<String, dynamic> params = {"type": '2', "size": 10, "number": page};
+    Map<String, dynamic> params = {
+      "type": '2',
+      "size": 10,
+      "foodTypes": "",
+      "sort": "",
+      "number": page
+    };
+    //美食类型
+    if (checkFoodTypeIndex.value > 0) {
+      params['foodTypes'] = foodTypeList[checkFoodTypeIndex.value].value;
+    } else {
+      params['foodTypes'] = "";
+    }
+    //智能排序
+    if (sortCurrentIndex.value > 0) {
+      params['sort'] = sortList[sortCurrentIndex.value]['sort'];
+    } else {
+      params['sort'] = "";
+    }
+    //价格区间
+    if (currentPriceIndex.value <= priceList.length - 1) {
+      String priceItem = priceList[currentPriceIndex.value]['pm'];
+      if (priceItem.contains('&')) {
+        List arr = priceItem.split('&');
+        params[arr[0].split('=')[0]] = arr[0].split('=')[1];
+        params[arr[1].split('=')[0]] = arr[1].split('=')[1];
+      } else {
+        params[priceItem.split('=')[0]] = priceItem.split('=')[1];
+      }
+    }
+    //营业时间
+    if (currentTimeIndex.value <= timeList.length - 1) {
+      String timeItem = timeList[currentTimeIndex.value]['pm'];
+      if (timeItem.contains('&')) {
+        List arr = timeItem.split('&');
+        params[arr[0].split('=')[0]] = arr[0].split('=')[1];
+        params[arr[1].split('=')[0]] = arr[1].split('=')[1];
+      } else {
+        params[timeItem.split('=')[0]] = timeItem.split('=')[1];
+      }
+    }
+    //特色设施
+    if (currentTagList.isNotEmpty) {
+      params['tags'] = currentTagList.join(',');
+    }
     GoodsAPI.getFoodStoreList(params: params).then((res) => {
           lastPage = ((res.data.totalElements) / 10).toInt(), //最后页码
           storeList..addAll(res.data.content), //店铺列表

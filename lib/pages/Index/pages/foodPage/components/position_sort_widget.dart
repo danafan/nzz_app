@@ -67,22 +67,20 @@ class PositionSortWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Obx(() => Text(
-                           foodPageController
-                                    .sortList[foodPageController
-                                        .sortCurrentIndex
-                                        .toInt()]['title']
-                                    ,
+                            foodPageController.sortList[
+                                    foodPageController.sortCurrentIndex.toInt()]
+                                ['title'],
                             style: TextStyle(
-                                color: foodPageController
-                                            .sortCurrentIndex.value >
-                                        0
-                                    ? ColorStyle.colorPrimary
-                                    : ColorStyle.colorTitle,
-                                fontWeight: foodPageController
-                                            .sortCurrentIndex.value >
-                                        0
-                                    ? FontWeight.w600
-                                    : FontWeight.w400,
+                                color:
+                                    foodPageController.sortCurrentIndex.value >
+                                            0
+                                        ? ColorStyle.colorPrimary
+                                        : ColorStyle.colorTitle,
+                                fontWeight:
+                                    foodPageController.sortCurrentIndex.value >
+                                            0
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
                                 fontSize: 24.r),
                           )),
                       SizedBox(width: 6.r),
@@ -103,17 +101,43 @@ class PositionSortWidget extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        '筛选',
-                        style: TextStyle(
-                            color: ColorStyle.colorTitle, fontSize: 24.r),
-                      ),
+                      Obx(() => Text(
+                            '筛选',
+                            style: TextStyle(
+                                color: (foodPageController
+                                                .currentPriceIndex.value <=
+                                            foodPageController
+                                                    .priceList.length -
+                                                1 ||
+                                        foodPageController
+                                                .currentTimeIndex.value <=
+                                            foodPageController.timeList.length -
+                                                1 ||
+                                        foodPageController
+                                            .currentTagList.isNotEmpty)
+                                    ? ColorStyle.colorPrimary
+                                    : ColorStyle.colorTitle,
+                                fontWeight: (foodPageController
+                                                .currentPriceIndex.value <=
+                                            foodPageController
+                                                    .priceList.length -
+                                                1 ||
+                                        foodPageController
+                                                .currentTimeIndex.value <=
+                                            foodPageController.timeList.length -
+                                                1 ||
+                                        foodPageController
+                                            .currentTagList.isNotEmpty)
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                                fontSize: 24.r),
+                          )),
                       SizedBox(width: 6.r),
-                      Image.asset(
-                        'images/food_sort_down.png',
-                        width: 13.53.r,
-                        height: 11.87.r,
-                      )
+                      Obx(() => Image.asset(
+                            foodPageController.screenIcon.value,
+                            width: 13.53.r,
+                            height: 11.87.r,
+                          ))
                     ],
                   ),
                 ))
